@@ -1,0 +1,160 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick Your Choice Templates</title>
+    <style>
+       img{
+        width: 500px;
+        cursor: pointer;
+       } 
+       div{
+        margin-bottom: 50px;
+       }
+       button{
+        cursor: pointer;
+       }
+       button{
+        width: 130px;
+        height: 40px;
+        border: none;
+        background-color:mediumaquamarine;
+        color: white;
+        display: block;
+        margin-top: 10px;
+        margin-left: 150px;
+
+       }
+       button span{
+        color: #A7f887;
+        font-size: 18px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-weight: 500;
+        
+
+       }
+    </style>
+</head>
+<body>
+    <h2>
+        Form
+    </h2>
+
+
+    
+    <script>
+        let p = ['<' ,'/script>']
+        const ni =  p[0] + p[1];
+        const gif_lists = ['https://drive.google.com/file/d/1MKWp4vD_f6mPllmOERfz3UF4MJEH2FEz/preview','https://drive.google.com/file/d/1MKWp4vD_f6mPllmOERfz3UF4MJEH2FEz/preview','https://drive.google.com/file/d/1MKWp4vD_f6mPllmOERfz3UF4MJEH2FEz/preview','https://drive.google.com/file/d/1MKWp4vD_f6mPllmOERfz3UF4MJEH2FEz/preview']
+        const view1 = `
+<!Doctype>        
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://professormichael.github.io/html/css.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div style="width: 100%; display: flex; justify-content: center; color: white;">
+        <h1>
+            Sign Up
+        </h1>
+
+    </div>
+    <div class="div">;
+    <div class="div_form">
+        <form>
+            <label> USERNAME<br/>
+                <input placeholder="Username....." type="text" id="username">
+            </label>
+            <label> EMAIL<br/>
+                <input placeholder="Email" type="email" >
+            </label>
+            <label id="l_password"> PASSWORD<br/>
+                <input type="password" placeholder="Password" id="password" onkeyup="check_pass()" required>
+                <p id="password_pass_length"></p>
+                <p id="password_pass_upper"></p>
+                <p id="password_pass_number"></p>
+                <p id="password_pass_symbol"></p>
+            </label>
+            <label> CONFIRM_PASSWORD<br/>
+                <input placeholder="Confirm_Password" type="password" id="confirm_password" required onkeyup="confirm_password1()">
+                <p id="confirm_pass_result"></p>
+            </label>
+            <button  type="button" id="button">
+                Submit
+            </button>
+        </form>
+    </div>
+    <div class="second_form">
+        <img src="modern-website-design-examples.jpg">
+    </div>
+    </div>
+    <script src="https://professormichael.github.io/html/script.js">
+         
+    ${ni}
+</body>
+</html>
+                
+        `;
+
+        for (var i =0; i<gif_lists.length; i++){
+
+            const div = document.createElement('div');
+            const p = document.createElement('h3');
+            const gif = document.createElement('iframe')
+            
+            gif.src = gif_lists[i]
+            gif.width = '640';
+            gif.height = '480'
+            gif.allow = 'autoplay';
+            function checkGIFPlayback() {
+                for(var j = 0; j<gif_lists.length; j++){
+                gif.src = gif_lists[j]
+                console.log(gif_lists[j])
+                }
+            }
+            setInterval(checkGIFPlayback, 35000)
+        
+            p.innerText = 'Form ' + (i +1)
+            div.appendChild(p)
+            gif.id = 'replayGIF';
+            const button = document.createElement('button');
+            button.id = 'button' +(i+1);
+            
+            button.addEventListener('click', function(){
+                event1()
+                console.log(i)
+                console.log(button.innerText)
+                window.location.href = 'code_editor.html'
+                if(button.innerText ==='View 1'){
+                    localStorage.setItem('item1', JSON.stringify(view1))
+                    
+                }
+            })
+            const span = document.createElement('span');
+            span.innerText = 'View ' +(i+1);
+            
+            
+            
+            document.body.appendChild(div)
+            div.appendChild(gif)
+            button.appendChild(span);
+            div.appendChild(button)
+            
+        
+        
+        }
+        function event1(){
+        //    window.location.href = 'code_editor.html'
+          //  localStorage.setItem('item', JSON.stringify('first'))
+        
+        }
+                
+            
+                
+    </script>
+
+</body>
+</html>
