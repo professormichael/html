@@ -184,47 +184,30 @@
 
             
        
-        const password1 = document.getElementById('password');
-        function check_pass(){
-            if(password1.value.length<4){
-                password_check.innerText = 'Your Password Is Weak';
-                password_check.style.color = 'red';
-            };
-            
-            if(password1.value.length>4 && password1.value.length<8){
-                password_check.innerText = 'Your Password Is Medium';
-                password_check.style.color = 'yellow';
-            };
-            
-            if(password1.value.length>8){
-                password_check.innerText = 'Your Password Is Unique';
-                password_check.style.color = 'blue';
-            };
-            
-        }
-        function confirm_password1(){
-            if(password.value === confirm_password.value){
-                password_confirm.innerText = 'Confirmed Password';
-                password_confirm.style.color = 'blue';
-            }
-            else{
-                password_confirm.innerText = 'Wrong Password';
-                password_confirm.style.color = 'red';
-            }
-        }
         
         let initialHTML = ''
         // Initial HTML content
         
         initialHTML = JSON.parse( localStorage.getItem('item1'))
-
         
 
+        fetch(initialHTML)
+            .then((response) => {
+                if (response.ok) {
+                    return response.text(); // Get the HTML content of the website
+                } else {
+                    throw new Error('Failed to fetch the website content');
+                }
+            })
+            .then((htmlContent) => {
+                codeTextarea.value = htmlContent;
+                updatePreview();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         
 
-        // Set the initial HTML content
-  //      codeTextarea.value = initialHTML;
-//        updatePreview();
     </script>
     
     

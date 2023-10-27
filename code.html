@@ -39,228 +39,13 @@
     <h2>
         Form
     </h2>
-
-
+    
     
     <script>
         let p = ['<' ,'/script>']
         const ni =  p[0] + p[1];
         const gif_lists = ['https://drive.google.com/file/d/1MKWp4vD_f6mPllmOERfz3UF4MJEH2FEz/preview','https://drive.google.com/file/d/1MKWp4vD_f6mPllmOERfz3UF4MJEH2FEz/preview','https://drive.google.com/file/d/1MKWp4vD_f6mPllmOERfz3UF4MJEH2FEz/preview','https://drive.google.com/file/d/1MKWp4vD_f6mPllmOERfz3UF4MJEH2FEz/preview']
-        const view1 = `
-<!Doctype>        
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link href="https://professormichael.github.io/html/css.css" type="text/css" rel="stylesheet">
-</head>
-<body>
-    <div style="width: 100%; display: flex; justify-content: center; color: white;">
-        <h1>
-            Sign Up
-        </h1>
-
-    </div>
-    <div class="div">;
-    <div class="div_form">
-        <form>
-            <label> USERNAME<br/>
-                <input placeholder="Username....." type="text" id="username">
-            </label>
-            <label> EMAIL<br/>
-                <input placeholder="Email" type="email" >
-            </label>
-            <label id="l_password"> PASSWORD<br/>
-                <input type="password" placeholder="Password" id="password" onkeyup="check_pass()" required>
-                <p id="password_pass_length"></p>
-                <p id="password_pass_upper"></p>
-                <p id="password_pass_number"></p>
-                <p id="password_pass_symbol"></p>
-            </label>
-            <label> CONFIRM_PASSWORD<br/>
-                <input placeholder="Confirm_Password" type="password" id="confirm_password" required onkeyup="confirm_password1()">
-                <p id="confirm_pass_result"></p>
-            </label>
-            <button  type="button" id="button">
-                Submit
-            </button>
-        </form>
-    </div>
-    <div class="second_form">
-        <img src="modern-website-design-examples.jpg">
-    </div>
-    </div>
-    <script src="https://professormichael.github.io/html/script.js">
-         
-    ${ni}
-</body>
-</html>
-                
-        `;
-const view2 = `
-        <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up ---- Space X</title>
-    <style>
-        body{
-            
-        }
-        button{
-            cursor: pointer;
-        }
-        #form_signup{
-            
-            
-            width: 400px;
-            height: 400px;
-            
-            
-        }
-        label, input{
-            display: block;
-            width: 100%;
-        }
-
-        h2{
-            display: block;
-        }
-        #div_sign{
-            display: grid;
-            place-items: center;
-            
-            height: 400px;
-
-        }
-        
-        .label{
-            width: 100%;
-            font-size: 28px;
-            
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            font-weight: 500;
-        }
-        #password_check , #password_confirm, #user_check{
-            font-size: 12px;
-            color: red;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            text-align: center;
-        }
-        .input{
-            width: 100%;
-            font-size: 16px;
-            border-radius: 10px;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            font-weight: 450;
-            letter-spacing: 3px;
-            border: none;
-            border-bottom: 2px solid deepskyblue;
-            outline: none;
-            background: transparent;
-        }
-        .input:placeholder-shown{
-            font-size: 16px;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            
-        }
-        .flex{
-            width: 100%;
-            
-            justify-content: center;
-            align-items: center;
-            justify-items: center;
-            align-content: center;
-            display: flex;
-        }
-        button{
-            width: 100%;
-            height: 50px;
-            font-size: 20px;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-weight: 450;
-            border: none;
-            background: transparent;
-            border-radius: 10px;
-            color: deepskyblue;
-            outline: none;
-            border-radius: 10px;
-        }
-        a{
-            color: rgba(92, 4, 58, 0.336);
-        }
-    </style>
-</head>
-<body>
-    <div >
-    <h2 class="flex"  style="margin-top: 100px;">
-        Sign Up
-    </h2>
-    </div>
-   <div id="div_form" class="flex">
-        <form id="form_signup" >
-            <div id="div_sign">
-            <label for="username" class="label"> Username<br/><br/>
-                <input id="username" class="input" name="username" placeholder="Choose A Username............" required>
-                <p id="user_check"></p>
-            </label>
-            <label for="password" class="label"> Password<br/><br/>
-                <input id="password" class="input" name="password" placeholder="Choose A Password.........." type="password" onkeyup="check_pass()" required>
-                <p id="password_check"></p>
-            </label>
-            <label for="confirm_password" class="label"> Confirm_Password<br/><br/>
-                <input id="confirm_password" class="input" placeholder="Confirm Your Password........" onkeyup="confirm_password1()" required type="password">
-                <p id="password_confirm"></p>
-            </label>
-            <button id="button" type="button" onclick="clicklo()">
-                Submit
-            </button>
-            <a href="animae_signin.html" style=" letter-spacing: 2px;font-size: 20px; display: inline; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;" >Login</a>
-            </div>
-        </form>
-    </div>
-    <script>
-        //action=" http://127.0.0.1:5000/get_data" method="POST"
-       
-        //const password1 = document.getElementById('password').value;
-        //const username = document.getElementById('username').value;
-        const confirm_password = document.getElementById('confirm_password');
-        const password_check = document.getElementById('password_check');
-        const user_check = document.getElementById('user_check');
-        const password_confirm = document.getElementById('password_confirm');
-        const password1 = document.getElementById('password');
-        function check_pass(){
-            if(password1.value.length<4){
-                password_check.innerText = 'Your Password Is Weak';
-                password_check.style.color = 'red';
-            };
-            
-            if(password1.value.length>4 && password1.value.length<8){
-                password_check.innerText = 'Your Password Is Medium';
-                password_check.style.color = 'yellow';
-            };
-            
-            if(password1.value.length>8){
-                password_check.innerText = 'Your Password Is Unique';
-                password_check.style.color = 'blue';
-            };
-            
-        }
-        function confirm_password1(){
-            if(password.value === confirm_password.value){
-                password_confirm.innerText = 'Confirmed Password';
-                password_confirm.style.color = 'blue';
-            }
-            else{
-                password_confirm.innerText = 'Wrong Password';
-                password_confirm.style.color = 'red';
-            }
-        }
-    ${ni}
-</body>
-</html>
-        `;
+        const view1 = ['https://professormichael.github.io/html/anime_signup.html','https://professormichael.github.io/html/animae_signin.html','https://professormichael.github.io/html/signup.html','https://professormichael.github.io/html/signin.html']
 
         for (var i =0; i<gif_lists.length; i++){
 
@@ -292,11 +77,19 @@ const view2 = `
                 console.log(button.innerText)
                 window.location.href = 'code_editor.html'
                 if(button.innerText ==='View 1'){
-                    localStorage.setItem('item1', JSON.stringify(view1))
+                    localStorage.setItem('item1', JSON.stringify(view1[0]))
                     
                 }
                 if(button.innerText ==='View 2'){
-                    localStorage.setItem('item1', JSON.stringify(view2))
+                    localStorage.setItem('item1', JSON.stringify(view1[1]))
+                    
+                }
+                if(button.innerText ==='View 3'){
+                    localStorage.setItem('item1', JSON.stringify(view1[2]))
+                    
+                }
+                if(button.innerText ==='View 4'){
+                    localStorage.setItem('item1', JSON.stringify(view1[3]))
                     
                 }
 
