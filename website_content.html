@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fetch and Log Website HTML</title>
+</head>
+<body>
+    <script>
+        // Replace 'yourWebsiteURL' with the URL of the website you want to retrieve
+        const websiteURL = 'https://professormichael.github.io/astrology/astrology.html';
+
+        fetch(websiteURL)
+            .then((response) => {
+                if (response.ok) {
+                    return response.text(); // Get the HTML content of the website
+                } else {
+                    throw new Error('Failed to fetch the website content');
+                }
+            })
+            .then((htmlContent) => {
+                console.log(htmlContent); // Log the HTML content to the console
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    </script>
+</body>
+</html>
