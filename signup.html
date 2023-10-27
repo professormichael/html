@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://professormichael.github.io/html/css.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div style="width: 100%; display: flex; justify-content: center; color: white;">
+        <h1>
+            Sign Up
+        </h1>
+
+    </div>
+    <div class="div">;
+    <div class="div_form">
+        <form>
+            <label> USERNAME<br/>
+                <input placeholder="Username....." type="text" id="username">
+            </label>
+            <label> EMAIL<br/>
+                <input placeholder="Email" type="email" >
+            </label>
+            <label id="l_password"> PASSWORD<br/>
+                <input type="password" placeholder="Password" id="password" onkeyup="check_pass()" required>
+                <p id="password_pass_length"></p>
+                <p id="password_pass_upper"></p>
+                <p id="password_pass_number"></p>
+                <p id="password_pass_symbol"></p>
+            </label>
+            <label> CONFIRM_PASSWORD<br/>
+                <input placeholder="Confirm_Password" type="password" id="confirm_password" required onkeyup="confirm_password1()">
+                <p id="confirm_pass_result"></p>
+            </label>
+            <button  type="button" id="button">
+                Submit
+            </button>
+        </form>
+    </div>
+    <div class="second_form">
+        <img src="modern-website-design-examples.jpg">
+    </div>
+    </div>
+    <script src="https://professormichael.github.io/html/script.js">
+         
+    </script>
+</body>
+</html>
