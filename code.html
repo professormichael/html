@@ -3,7 +3,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pick Your Choice Templates</title>
+    <link href="button.css" rel="stylesheet" type="text/css">
     <style>
+        body{
+            display: flex;
+            
+            flex-direction: column;
+            justify-content: center;
+            justify-items: center;
+            align-items: center;
+        }
        img{
         width: 500px;
         cursor: pointer;
@@ -36,86 +45,132 @@
     </style>
 </head>
 <body>
-    <h2>
-        Form
-    </h2>
     
     
     <script>
-        let p = ['<' ,'/script>']
-        const ni =  p[0] + p[1];
-        const gif_lists = ['https://drive.google.com/file/d/1MKWp4vD_f6mPllmOERfz3UF4MJEH2FEz/preview','https://drive.google.com/file/d/1MKWp4vD_f6mPllmOERfz3UF4MJEH2FEz/preview','https://drive.google.com/file/d/1MKWp4vD_f6mPllmOERfz3UF4MJEH2FEz/preview','https://drive.google.com/file/d/1MKWp4vD_f6mPllmOERfz3UF4MJEH2FEz/preview']
-        const view1 = ['https://professormichael.github.io/html/anime_signup.html','https://professormichael.github.io/html/animae_signin.html','https://professormichael.github.io/html/signup.html','https://professormichael.github.io/html/signin.html']
+        function form_set() {
+            let p = ['<' ,'/script>']
+            const ni =  p[0] + p[1];
+            const gif_lists = ['2023-10-26-20-33-36.gif','2023-10-27-23-05-33.gif','2023-10-27-23-05-33.gif','2023-10-26-20-33-36.gif']
+            const view1 = ['https://professormichael.github.io/html/anime_signup.html','https://professormichael.github.io/html/animae_signin.html','https://professormichael.github.io/html/signup.html','https://professormichael.github.io/html/signin.html']
+            const h2 = document.createElement('h2');
+            h2.innerText = 'Form';
+            document.body.appendChild(h2)
+            for (var i = 0; i < gif_lists.length; i++) {
+                const div = document.createElement('div');
+                const p = document.createElement('h3');
+                const gif = document.createElement('iframe');
+                gif.src = gif_lists[i];
+                gif.width = '640';
+                gif.height = '480';
+                gif.allow = 'autoplay';
 
-        for (var i =0; i<gif_lists.length; i++){
+                p.innerText = 'Form ' + (i + 1);
+                div.appendChild(p);
+                div.appendChild(gif);
+                document.body.appendChild(div);
 
-            const div = document.createElement('div');
-            const p = document.createElement('h3');
-            const gif = document.createElement('iframe')
-            
-            gif.src = gif_lists[i]
-            gif.width = '640';
-            gif.height = '480'
-            gif.allow = 'autoplay';
-            function checkGIFPlayback() {
-                for(var j = 0; j<gif_lists.length; j++){
-                gif.src = gif_lists[j]
-                console.log(gif_lists[j])
-                }
+                const button1 = document.createElement('button');
+                button1.innerText = 'View ' + (i + 1);
+                button1.classList.add('button1');
+                div.appendChild(button1);
+
+                button1.addEventListener('click', function() {
+                    localStorage.removeItem('click')
+                    if (button1.innerText === 'View 1') {
+                        localStorage.setItem('item1', JSON.stringify(view1[0]));
+                    } else if (button1.innerText === 'View 2') {
+                        localStorage.setItem('item1', JSON.stringify(view1[1]));
+                    } else if (button1.innerText === 'View 3') {
+                        localStorage.setItem('item1', JSON.stringify(view1[2]));
+                    } else if (button1.innerText === 'View 4') {
+                        localStorage.setItem('item1', JSON.stringify(view1[3]));
+                    }
+                    window.location.href = 'code_editor.html';
+                });
             }
-            setInterval(checkGIFPlayback, 35000)
+        }
         
-            p.innerText = 'Form ' + (i +1)
-            div.appendChild(p)
-            gif.id = 'replayGIF';
-            const button = document.createElement('button');
-            button.id = 'button' +(i+1);
+        function buttonap() {
+            let div = document.createElement('div');
+            let h2 = document.createElement('h2');
             
-            button.addEventListener('click', function(){
-                event1()
-                console.log(i)
-                console.log(button.innerText)
-                window.location.href = 'code_editor.html'
-                if(button.innerText ==='View 1'){
-                    localStorage.setItem('item1', JSON.stringify(view1[0]))
-                    
-                }
-                if(button.innerText ==='View 2'){
-                    localStorage.setItem('item1', JSON.stringify(view1[1]))
-                    
-                }
-                if(button.innerText ==='View 3'){
-                    localStorage.setItem('item1', JSON.stringify(view1[2]))
-                    
-                }
-                if(button.innerText ==='View 4'){
-                    localStorage.setItem('item1', JSON.stringify(view1[3]))
-                    
-                }
-
-            })
-            const span = document.createElement('span');
-            span.innerText = 'View ' +(i+1);
-            
-            
-            
+            h2.innerText = 'Button';
+            div.appendChild(h2);
+            h2 = document.createElement('h2');
+            h2.innerText = 'Squared Button';
+            div.appendChild(h2);
             document.body.appendChild(div)
-            div.appendChild(gif)
-            button.appendChild(span);
-            div.appendChild(button)
-            
-        
-        
-        }
-        function event1(){
-        //    window.location.href = 'code_editor.html'
-          //  localStorage.setItem('item', JSON.stringify('first'))
-        
-        }
-                
-            
-                
-    </script>
+            const button_list = ['<button style="color:white" class="fa-fa-button width_200px border_color_white background_color_black">Submit</button>',
+                                '<button style="color:black" class="fa-fa-button width_200px border_color_black background_color_white">Submit</button>',
+                                '<button style="color:white" class="fa-fa-button width_200px border_color_white background_color_black">Submit</button>',
+                                '<button style="color:black" class="fa-fa-button width_200px border_color_black background_color_white">Submit</button>',
+                                '<button style="color:black" class="fa-fa-button width_200px border_color_white background_color_green">Submit</button>',
+                                '<button style="color:yellow; background-color:blue; margin-left:35px;" class="fa-fa-button border_color_white background_color_green">Submit</button>',
+                                '<button style="color:blue; margin-left:35px; border:blue 1px solid;" class="fa-fa-button border_color_white background_color_white">Submit</button>',                                   
+                                '<button style="color:yellow; background-color:blue; " class="fa-fa-button width_200px border_color_white background_color_green">Submit</button>',
+                                '<button style="color:blue;  border:blue 1px solid;" class="fa-fa-button width_200px border_color_white background_color_white">Submit</button>',
+                                '<br/>',
+                                '<h2>Rounder Buttons</h2>',
+                                '<button style="color:blue;  border:blue 1px solid;" class="fa-fa-button width_200px rounded_200px border_color_white background_color_white">Submit</button>',
+                                '<button style="color:white" class="fa-fa-button width_200px rounded_200px border_color_white background_color_black">Submit</button>',
+                                '<button style="color:black" class="fa-fa-button width_200px rounded_200px border_color_black background_color_white">Submit</button>',
+                                '<button style="color:black" class="fa-fa-button width_200px rounded_200px border_color_white background_color_green">Submit</button>',
+                                '<button style="color:white; margin-left:25px;" class="fa-fa-button width rounded border_color_white background_color_black">Submit</button>',
+                                '<button style="color:black; margin-left:25px;" class="fa-fa-button width rounded border_color_black background_color_white">Submit</button>',
+                                '<button style="color:black; margin-left:25px;" class="fa-fa-button width rounded border_color_white background_color_green">Submit</button>',
+                                
+                                '<br/>',
+                                '<h2>Input</h2>',
+                                
+                                '<input class="width-300px input " placeholder="Write A Text...........">',
+                                '<input class="width-300px input input_border" placeholder="Write A Text...........">',
+                                '<input class="width-300px input input_border input_border_bottom" placeholder="Write A Text...........">',
+                                '<input class="width-300px input input_border  input_border_top" placeholder="Write A Text...........">',
+                                '<input class="width-300px input  input_border_left " placeholder="Write A Text...........">',
+                                '<input class="width-300px input rounded_input" placeholder="Write A Text...........">',
+                         
+                                '<br/>',
+                                '<h2>File</h2>',
+                                
+                                '<input class="file " type="file">',
+                                '<input class=" file_rounded" type="file">',
+                                '<input class=" file_bottom_border " type="file">',
+                                '<input class="transparent" type="file">',
+                                
+                         
+                                
+                            ];
 
+            for (var i = 0; i < button_list.length; i++) {
+
+                div.innerHTML += button_list[i];
+            }
+
+            const button_avail = document.querySelectorAll('.fa-fa-button');
+            console.log(button_avail.length)
+            button_avail.forEach(each => {
+                each.addEventListener('click', function() {
+                    localStorage.setItem('click', each.outerHTML);
+                    localStorage.removeItem('item1')
+                    window.location.href = 'code_editor.html';
+                });
+            });
+            const input_avail = document.querySelectorAll('.input');
+            console.log(input_avail.length)
+            input_avail.forEach(each => {
+                each.addEventListener('click', function() {
+                    localStorage.setItem('click', each.outerHTML);
+                    localStorage.removeItem('item1')
+                    window.location.href = 'code_editor.html';
+                });
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            form_set();
+            buttonap();
+        });
+    </script>
 </body>
 </html>
