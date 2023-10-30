@@ -9,6 +9,7 @@
     margin-left: 0;
     border: none;
     word-spacing: 2px;
+    
     background-color: rgb(21, 3, 68);
     
 }
@@ -65,7 +66,23 @@
     border-radius: 20px;    
     border: black solid 1px;
 }
-
+.input_new:placeholder-shown{
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 450;
+    color: teal;
+    letter-spacing: 3px;
+    margin-bottom: 70px;
+    padding-left: 15px;
+}
+.input_new{
+    text-align: start;
+    width: 300px;
+    border: none;
+    background-color: black;
+    height: 50px;
+    border-radius: 25px;
+}
 .file{
     
     font-size: 18px;    
@@ -136,13 +153,104 @@
     font-size: 18px;    
     color:rgb(30, 34, 30);
     cursor: pointer;
-    
     margin-bottom: 70px;
     margin-left: 70px;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    
+}
+.button_class{
+    width: 170px;
+    height: 40px;
+    border: none;
+
+    
+    
+}
+.color{
+    width: 120px;
+    height: 40px;
+    border: none;
+    outline: none;
+    
+}
+#label_time{
+    font-size: 20px;
+    margin-right: 50px;
+
+}
+#label_date{
+    font-size: 19px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    letter-spacing: 2px;
+    font-weight: 450;
+    
+}
+.range:in-range{
+    color: red;
+    background-color: red;
+}
+.textarea{
+    width: 600px;
+    height: 350px;
+    border-top-color: lightgreen;
+    border-bottom-color: lightgreen;
+    font-size: 21px;
+    letter-spacing: 2px;
+    word-spacing: 2px;
+    background-color: rgba(128, 128, 128, 0.349);
+    font-variant-ligatures: historical-ligatures;
+    font-optical-sizing: 2px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    outline: none;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    border-left-color: blue;
+    border-right-color: blue;
+}
+.range{
+    width: 140px;
+    
+    color: navajowhite;
+}
+.date{
+    margin-left: 20px;
+    font-size: 17px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    letter-spacing: 2px;
+    font-weight: 450;
+    font-variant-caps: all-petite-caps;
+    
+
+}
+
+.time{
+    width: 170px;
+    height: 40px;
+    margin-left: 30px;
+    border: none;
+    outline: none;
+}
+.label_color{
+    
+    font-size: 17px;
+    width: 400px;
+    display: block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 400;
+    letter-spacing: 2px;
+    box-shadow: inset 1px black;
+
+}
+
+
+.span{
+    font-size: 20px;
+    color: black;
+    box-shadow:  60px 1px 60px 0px lightgreen;
 }
 .transparent::-webkit-file-upload-button{
     background:transparent;

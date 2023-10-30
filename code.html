@@ -5,15 +5,23 @@
     <title>Pick Your Choice Templates</title>
     <link href="button.css" rel="stylesheet" type="text/css">
     <style>
-        body{
+        
+        
+        label{
+            cursor: pointer;
+        }
+        #div_main{
             display: flex;
             
             flex-direction: column;
             justify-content: center;
             justify-items: center;
             align-content: center;
+            z-index: 20;
+            margin-top: 150px;            
             align-items: center;
         }
+
        img{
         width: 500px;
         cursor: pointer;
@@ -23,6 +31,7 @@
        }
        button{
         cursor: pointer;
+        
        }
        button{
         width: 130px;
@@ -43,20 +52,179 @@
         
 
        }
+       .header{
+        top: 0;
+        position: fixed;
+        height: 100px;
+        width: 100%;        
+        display: flex;
+        left: 30px;
+        justify-content: start;
+        align-items: center;
+       }
+       .header a{
+            
+            text-decoration: none;
+            font-size: 21px;
+            
+            font-weight: 400;
+            
+       }
+       .header a:nth-child(1){
+        margin-right: 30px;
+        color: blue;
+        visibility: visible;
+       }
+       #a_link{
+        margin-right: 40px;
+        color: green;
+        visibility: visible;
+        display: inline;
+       }
+       #a_link1{
+        margin-left: 30px;
+        margin-right: 50px;
+        color: lightskyblue;
+        visibility: visible;
+       }
+       #a_link2{
+        margin-top: 5px;
+        margin-left: 30px;
+        margin-right: 50px;
+        color: cyan;
+
+        visibility: visible;
+       }
+       
+       .sup_div{
+        height: 20px;
+        margin-left: 0;
+        width: 60px;
+        margin-bottom: 0;
+        visibility: hidden;
+       }
+       .sup_div button{
+        margin-left: 0;
+        
+       }
+       .header button{
+        z-index: 100;
+        display: inline;
+       }
+       .sup_div:hover{
+        visibility: visible;
+       }
+       .input_div{
+        height: 20px;
+        margin-left: 0;
+        width: 60px;
+        margin-bottom: 0;
+        visibility: hidden;
+       }
+       .input_div button{
+        margin-left: 0;
+       }
+       .input_div:hover{
+        visibility: visible;
+       }
+       .div_button button{
+        display: inline;
+       }
+       .div_input{
+        overflow: scroll;
+        overflow-y: scroll;
+        width: 200px;
+        overflow-x: hidden;
+        height: 200px;
+
+       }
+       
+       
+       
     </style>
+
 </head>
-<body>
-    
+<body id="body">
+    <div class="header" id="header">
+        <a href="#form">
+            Form
+        </a>
+        <div class="sup_div">
+        <a id="a_link">
+            Button
+        </a>
+        <div class="div_button" id="div_button">
+            <button class="squared" onclick="window.location.href = '#squared';">Squared Button</button>
+            <button class="rounded" onclick="window.location.href = '#rounded';">Rounded Button</button>
+        </div>
+        </div>
+        <div class="input_div">
+        <a id="a_link1">
+            Input
+        </a>
+        <div class="div_input" id="div_input">
+            <button class="button_class" onclick="window.location.href = '#text';">Text Input</button>
+            <button class="button_class" onclick="window.location.href = '#file';">File Input</button>
+            <button class="button_class" onclick=" window.location.href = '#color';">Color Input</button>
+            <button class="button_class" onclick="window.location.href = '#date';">Date Input</button>
+            <button class="button_class" onclick="window.location.href = '#time';">Time Input</button>
+            <button class="button_class" onclick="window.location.href = '#range';">Range Input</button>
+            <button class="button_class" onclick="window.location.href = '#email';">Email Input</button>
+        </div>
+        </div>
+        <a id="a_link2" href="#textarea">
+           Textarea
+        </a>
+        
+        
+        
+    </div>
     
     <script>
+        const a_link = document.getElementById('a_link')
+        const div_button = document.getElementById('div_button')
+       //div_button.style.visibility = 'hidden' ;
+        a_link.addEventListener('click', function(){
+            console.log(true)
+            if(getComputedStyle(div_button).visibility === 'hidden'){
+                console.log(true)
+                div_button.style.visibility = 'visible'
+            }
+            
+            else if(getComputedStyle(div_button).visibility === 'visible'){
+                console.log(false)
+                div_button.style.visibility = 'hidden'
+            }
+        })
+        const a_link1 = document.getElementById('a_link1')
+        const div_input = document.getElementById('div_input')
+       //div_button.style.visibility = 'hidden' ;
+        a_link1.addEventListener('click', function(){
+            console.log(true)
+            if(getComputedStyle(div_input).visibility === 'hidden'){
+                console.log(true)
+                div_input.style.visibility = 'visible'
+            }
+            
+            else if(getComputedStyle(div_input).visibility === 'visible'){
+                console.log(false)
+                div_input.style.visibility = 'hidden'
+            }
+        })
+        const div_main = document.createElement('div');
+        div_main.id = 'div_main';
+
+        document.body.appendChild(div_main)
         function form_set() {
+            window.location.href = '#header';
             let p = ['<' ,'/script>']
             const ni =  p[0] + p[1];
             const gif_lists = ['2023-10-26-20-33-36.gif','2023-10-27-23-05-33.gif','2023-10-27-23-05-33.gif','2023-10-26-20-33-36.gif']
             const view1 = ['https://professormichael.github.io/html/anime_signup.html','https://professormichael.github.io/html/animae_signin.html','https://professormichael.github.io/html/signup.html','https://professormichael.github.io/html/signin.html']
             const h2 = document.createElement('h2');
             h2.innerText = 'Form';
-            document.body.appendChild(h2)
+            h2.id = 'form';
+            div_main.appendChild(h2)
             for (var i = 0; i < gif_lists.length; i++) {
                 const div = document.createElement('div');
                 const p = document.createElement('h3');
@@ -67,9 +235,10 @@
                 gif.allow = 'autoplay';
 
                 p.innerText = 'Form ' + (i + 1);
+
                 div.appendChild(p);
                 div.appendChild(gif);
-                document.body.appendChild(div);
+                div_main.appendChild(div)
 
                 const button1 = document.createElement('button');
                 button1.innerText = 'View ' + (i + 1);
@@ -93,17 +262,22 @@
         }
         
         function buttonap() {
+            window.location.href = '#header';
             let div = document.createElement('div');
             let h2 = document.createElement('h2');
             
             h2.innerText = 'Button';
+            
             div.appendChild(h2);
             div.style.marginLeft = '230px';
             h2 = document.createElement('h2');
             h2.innerText = 'Squared Button';
+            h2.id = 'squared';
             div.appendChild(h2);
-            document.body.appendChild(div)
-            const button_list = ['<button style="color:white" class="fa-fa-button width_200px border_color_white background_color_black">Submit</button>',
+            div_main.appendChild(div)
+            const button_list = [
+                
+            '<button style="color:white" class="fa-fa-button width_200px border_color_white background_color_black">Submit</button>',
                                 '<button style="color:black" class="fa-fa-button width_200px border_color_black background_color_white">Submit</button>',
                                 '<button style="color:white" class="fa-fa-button width_200px border_color_white background_color_black">Submit</button>',
                                 '<button style="color:black" class="fa-fa-button width_200px border_color_black background_color_white">Submit</button>',
@@ -113,36 +287,71 @@
                                 '<button style="color:yellow; background-color:blue; " class="fa-fa-button width_200px border_color_white background_color_green">Submit</button>',
                                 '<button style="color:blue;  border:blue 1px solid;" class="fa-fa-button width_200px border_color_white background_color_white">Submit</button>',
                                 '<br/>',
-                                '<h2>Rounder Buttons</h2>',
+                                '<h2 id="rounded">Rounder Buttons</h2>',
                                 '<button style="color:blue;  border:blue 1px solid;" class="fa-fa-button width_200px rounded_200px border_color_white background_color_white">Submit</button>',
                                 '<button style="color:white" class="fa-fa-button width_200px rounded_200px border_color_white background_color_black">Submit</button>',
                                 '<button style="color:black" class="fa-fa-button width_200px rounded_200px border_color_black background_color_white">Submit</button>',
-                                '<button style="color:black" class="fa-fa-button width_200px rounded_200px border_color_white background_color_green">Submit</button>',
+                                '<button style="box-shadow: inset 10px 10px 10px 10px greenyellow; color:black; " class="fa-fa-button width_200px rounded_200px border_color_white background_color_green"><span class="span">Submit</span></button>',
                                 '<button style="color:white; margin-left:25px;" class="fa-fa-button width rounded border_color_white background_color_black">Submit</button>',
                                 '<button style="color:black; margin-left:25px;" class="fa-fa-button width rounded border_color_black background_color_white">Submit</button>',
                                 '<button style="color:black; margin-left:25px;" class="fa-fa-button width rounded border_color_white background_color_green">Submit</button>',
                                 
                                 '<br/>',
-                                '<h2>Input</h2>',
+                                '<h2 id="text">Input</h2>',
                                 
                                 '<input class="width-300px input " placeholder="Write A Text...........">',
                                 '<input class="width-300px input input_border" placeholder="Write A Text...........">',
                                 '<input class="width-300px input input_border input_border_bottom" placeholder="Write A Text...........">',
                                 '<input class="width-300px input input_border  input_border_top" placeholder="Write A Text...........">',
+                                '<input class="width-300px  input_new" placeholder="Write A Text...........">',
                                 '<input class="width-300px input  input_border_left " placeholder="Write A Text...........">',
                                 '<input class="width-300px input rounded_input" placeholder="Write A Text...........">',
                          
                                 '<br/>',
-                                '<h2>File</h2>',
+                                '<h2 id="file">File</h2>',
                                 
-                                '<input class="file " type="file">',
-                                '<input class=" file_rounded" type="file">',
-                                '<input class=" file_bottom_border " type="file">',
-                                '<input class="transparent" type="file">',
+                                '<input class="file i " type="file">',
+                                '<input class=" file_rounded i " type="file">',
+                                '<input class=" file_bottom_border i" type="file">',
+                                '<input class="transparent i " type="file">',
+
+                                '<br/>',
+                                '<h2 id="color">Color Picker</h2>',
+                                '<label class="label_color"> Pick The Color Of Your Choice'+
+                                '<input class="color" type="color" />' +'</label>',
+
+                                '<br/>',
+                                '<h2 id="time">Time</h2>',
+                                '<label for="label_time" id="time" class="i"> Pick The Time'+
+                                '<input type="time" id="label_time" class="time "/>' +'</label>',
+
+                                '<br/>',
+                                '<h2 id="date">Date</h2>',
+                                '<label for="label_date" id="date" class="i"> Pick The Date'+
+                                '<input type="date" id="label_date" class="date "/>' +'</label>',
+                                
+                                '<br/>',
+                                '<h2 id="range">Range</h2>',
+                                
+                                '<input type="range"  class="range i"/>',
+
+                                '<br/>',
+                                '<h2 id="email">Email</h2>',
+                                
+                                '<input type="email"  class="width-300px input i" placeholder="Write A Email..........."/>',
+
+                                '<br/>',
+                                '<h2 id="textarea">TextArea</h2>',
+                                
+                                '<textarea  class="textarea i" ></textarea>',
+
+                                
+                                
                                 
                          
                                 
                             ];
+
 
             for (var i = 0; i < button_list.length; i++) {
 
@@ -161,18 +370,59 @@
             const input_avail = document.querySelectorAll('.input');
             console.log(input_avail.length)
             input_avail.forEach(each => {
+                const comment = document.createComment('This Is An Input Template To Help You In Styling More Inputs')
+                each.appendChild(comment)
                 each.addEventListener('click', function() {
-                    localStorage.setItem('click', each.outerHTML);
+                    
+                    console.log(comment)
+                    
+                    each.appendChild(comment)
+                    
+                    localStorage.setItem('click', `${each.outerHTML}`);
+                    localStorage.removeItem('item1')
+                    window.location.href = 'code_editor.html';
+                });
+            });
+            const input_file = document.querySelectorAll('.i');
+            console.log(input_file.length)
+            input_file.forEach(each => {
+                const comment = document.createComment('This Is An Input Template To Help You In Styling More Inputs')
+                each.appendChild(comment)
+                each.addEventListener('click', function() {
+                    
+                    console.log(comment)
+                    
+                    each.appendChild(comment)
+                    
+                    localStorage.setItem('click', `${each.outerHTML}`);
+                    localStorage.removeItem('item1')
+                    window.location.href = 'code_editor.html';
+                });
+            });
+            const inputColor = document.querySelectorAll('.color');
+            
+            inputColor.forEach(each=>{
+                const comment = document.createComment('This Is An Input Template To Help You In Styling More Inputs')
+                each.appendChild(comment)
+                each.addEventListener('click', function() {
+                    
+                    console.log(comment)
+                    
+                    each.appendChild(comment)
+                    
+                    localStorage.setItem('click', `${each.outerHTML}`);
                     localStorage.removeItem('item1')
                     window.location.href = 'code_editor.html';
                 });
             });
         }
-        
+
         document.addEventListener('DOMContentLoaded', function() {
+            window.location.href = '#header';
             form_set();
             buttonap();
         });
+        window.location.href = '#header';
     </script>
 </body>
 </html>
