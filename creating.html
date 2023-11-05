@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor Software</title>
+    
+    <style>
+        #top_input{
+            display: none;
+        }
+    .button {
+      width: 300px;
+      background-color: #3498db;
+      position: absolute;
+      cursor: crosshair;
+    }
+    .selected {
+      border: 2px dotted red;
+      position: absolute;
+    }
+    .handle {
+      width: 10px;
+      height: 10px;
+/*      background-color: #000;*/
+      position: absolute;
+    }
+
+    button{
+        cursor: pointer;
+        
+       }
+       button{
+        width: 160px;
+        height: 65px;
+        margin-top: 10px;
+        font-size: 16px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-weight: 400;
+        border: none;
+        background-color:mediumaquamarine;
+        color: white;
+        display: block;
+        margin-bottom: 20px;
+        margin-left: 25px;
+       }
+       button span{
+        color: #A7f887;
+        font-size: 18px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-weight: 500;
+        
+
+       }
+      
+        body {
+            background-color: rgb(63, 65, 87);
+            margin: 0;
+            height: 800px;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            
+        }
+        .label_position1 input, .label_position1 word{
+            margin-left: 30px;
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            width: 200px;
+            top: 50px;
+            z-index: 130;
+            align-items: center;
+            justify-content: space-between;
+            background-color:black;
+            bottom: 0;
+            padding-right: 5px; /* Added padding to accommodate button overflow */
+        }
+        .main_div{
+            top: 50px;
+            left: 200px;
+            z-index: 100;
+            width: 890px;
+            
+
+            position: relative;
+            
+            
+            height: 100%;
+        }
+        word{
+            display: none;
+        
+        }
+        #border_radius_butt{
+            display: none;
+        }
+        
+        .label_position1, .label_position12{            
+            color: gray;
+            margin-left: -20px;
+            font-size: 15px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-color: transparent;
+            height: 20px;
+            width: 120px;
+
+        }
+        .label_position1 span,.label_position3 span{
+            color: gray;
+            font-size: 14px;
+            margin-left: 0px;
+            padding-left: 0px;
+        }
+
+        .label_position input{
+            display: none;
+            background-color: gray;
+            margin-left: 20px;
+            z-index: 170;
+
+        }
+        .label_position3 word{
+            display: inline;
+        }
+        .sidebar a,
+        #a_link,
+        #a_link1,
+        #a_link2 {
+            width: 100%;
+            height: 70px;
+            border: 2px solid black;
+            margin-top: 20px;
+            
+            background-color:transparent;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 21px;
+            font-weight: 400;
+            display: block;
+            
+            text-align: center;
+            line-height: 70px;
+        }
+        a:hover{
+            opacity: 0.7;
+        }
+
+        #a_link {
+            color: green;
+        }
+        #a_link1 {
+            color: lightskyblue;
+        }
+
+        #a_link2 {
+            color: cyan;
+        }
+
+        .button_class {
+            width: 100%; /* Adjusted to compensate for the sidebar padding */
+            height: 40px;
+            border: none;
+            background-color:white;
+            color: white;
+            z-index: 120;
+            left: 300px;
+            position: absolute;
+            right: 300px; /* Position the buttons outside the sidebar */
+            top: 50px; /* Position them vertically in line with the hovered link */
+            cursor: pointer;
+        }
+        #transparency{
+            color: black;
+            background-color: black;
+        }
+        h2{
+            color: white;
+        }
+        .div_button{
+            position: absolute;
+            left: 315px;
+            visibility: hidden;
+        }
+        
+        .div_input{
+            position: absolute;
+            left: 315px;
+            z-index: 120;
+            visibility: hidden;
+            overflow: scroll;
+            overflow-y: scroll ;
+            width: 200px;
+            background-color: white;
+            overflow-x: hidden ;
+            flex-direction: column;
+            height: 200px;
+        
+        }
+        .right_sidebar{
+            width: 200px;
+            top: 50px;
+            position: fixed;
+            z-index: 150;
+            background-color:black;
+            bottom: 0;
+            right: 0;
+            overflow-y: scroll;
+            padding-right: 5px; /* Added padding to accommodate button overflow */
+        }
+        label{
+            color: white;
+            font-size: 14px;
+            z-index: 150;
+            margin: 10px 5px 10px 5px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            display: block;
+        }
+        label input{
+            width: 100px;
+            height: 10px;
+            background-color: gray;
+            outline: none;
+        }
+        .label_position12{
+
+        }
+        #padding, #margin{
+            display: none;
+        }
+
+        /* Additional styles for other elements if needed */
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <a href="#form">Form</a>
+        <div class="sup_div">
+            <a id="a_link" >Button</a>
+            <div class="div_button" id="div_button" >
+                <button class="squared" >Squared Button</button>
+                <button class="rounded" onclick="window.location.href = '#rounded';">Rounded Button</button>
+            </div>
+        </div>
+        <div class="input_div">
+            <a id="a_link1">Input</a>
+            <div class="div_input" id="div_input" class="button_class">
+                <button onclick="window.location.href = '#textinput';">Text Input</button>
+                <button onclick="window.location.href = '#fileinput';">File Input</button>
+                <button  onclick=" window.location.href = '#color';">Color Input</button>
+                <button  onclick="window.location.href = '#date';">Date Input</button>
+                <button  onclick="window.location.href = '#time';">Time Input</button>
+                <button  onclick="window.location.href = '#range';">Range Input</button>
+                <button  onclick="window.location.href = '#email';">Email Input</button>
+                <!-- Add other input buttons similarly -->
+            </div>
+        </div>
+        <a id="a_link2" href="#textarea">Textarea</a>
+    </div>
+
+    <div class="main_div" id="main_div">
+        
+    </div>
+    <div class="right_sidebar" id="right_sidebar">
+        <div id="main_div_result" style="color: white;">
+
+        </div>
+        <a id="copy"></a>
+        <div class="setting_sidebar" id="setting_sidebar">
+            <label for="width_input">
+                Width
+                <input id="width_input" type="number">
+                px
+            </label>
+            <label for="height_input">
+                Height
+                <input id="height_input" type="number">
+                px
+            </label>
+            <label for="background_color">
+                Background_Color
+                <input id="background_color" type="color" style ="background-color: red;color: red; height: 15px; width: 15px; display: block; cursor: pointer; "/>
+                
+            </label>
+            <label for="transparency"> Transparency
+                <input id="transparency" type="checkbox" style="width: 10px;" >
+            </label>
+            <select id="cursor" style="background-color: gray;">
+                    
+            </select>
+            <label for="text_color" >
+                Text Color
+                <input id="text_color" type="color" style ="background-color: red;color: red; height: 15px; width: 15px; display: block; cursor: pointer; ">
+            </label>
+            <label id="padding">
+                Padding
+                <br/>
+                <word style="display: inline;">Top
+                    <input id="padding_top" style="width: 10px;"/>    
+                </word>
+                
+                <word style="display:inline;">Bottom
+                    
+                
+                <input id="padding_bottom" style="width: 10px;"/>
+                </word>
+                <word style="display:inline;">Left
+                
+                
+                <input id="padding_left" style="width: 10px;"/>
+                </word>
+                <word style="display:inline;">Right
+                    
+                
+                <input id="padding_right" style="width: 10px;"/>
+                </word>
+
+
+                
+            </label>
+            <label id="margin">
+                Margin
+                <br/>
+                <word style="display: inline;">Top
+                    <input id="margin_top" style="width: 10px;"/>    
+                </word>
+                
+                <word style="display:inline;">Bottom
+                    
+                
+                <input id="margin_bottom" style="width: 10px;"/>
+                </word>
+                <word style="display:inline;">Left
+                
+                
+                <input id="margin_left" style="width: 10px;"/>
+                </word>
+                <word style="display:inline;">Right
+                    
+                
+                <input id="margin_right" style="width: 10px;"/>
+                </word>
+
+
+                
+            </label>
+            
+            <label for="text_input" id="text_label">
+                Text
+                <input id="text_input" type="text">
+                <label> Font Family
+                <select id="fontSelector" style="background-color: gray;">
+                    
+                </select>
+                </label>
+                <label> Font Size
+                    <input id="font_input" type="text">
+                    <select id="fontSize" style="background-color: gray;">
+                        
+                    </select>
+                    
+                </label>
+                
+                
+            </label>
+            
+            
+            <button  id="label_position" class="label_position1">
+                <span>Position  ></span>
+            </button>
+            <label id ="label_position1" class="label_position">
+                <br>
+                <word >Top</word> 
+                <input id="top_input" type="number">
+                <word >px</word>
+                <br>
+
+                <word >Left</word>
+                <input id="left_input" type="number">
+                <word >px</word>
+                <br>
+                <word>Right</word>
+                <input id="right_input" type="number">
+                <word >px</word>
+                <br>
+                <word>Bottom</word>
+                <input id="bottom_input" type="number">
+                <word >px</word>
+            </label>    
+                
+            <button  id="label_position_butt1" class="label_position1">
+                <span>Border  ></span>
+            </button>
+            <label id ="label_posit" class="label_position3">
+                <br>
+                <word >Border Width</word>
+                <input id="border_width" type="text">
+                <word >px</word>
+                <!-----
+                <br>
+                <word>Border Left</word>
+                <input id="border_left" type="number">
+                <word >px</word>
+                <br>
+                <word>Border Right</word>
+                <input id="Border_right" type="number">
+                <word >px</word>
+                
+                <word>Border Top</word>
+                <input id="Border_top" type="number">
+                <word >px</word>
+                -->
+                <button id="border_radius_butt" class="label_position1">
+                    Border`s Radius`s
+                </button>
+                <label id="border_label">
+                    <br>
+                    <word >Border Radius</word> 
+                    <input id="border_radius" type="text">
+                    <word >px</word>
+                    <br>
+                    <word >Border Color</word> 
+                    <input id="border_color" style ="background-color: red;color: red; height: 15px; width: 15px; display: block; cursor: pointer; " type="color">
+                    
+                </label>
+            </label>
+        
+            <label> ID`s Of Tags Opened
+                <p id="labelid"></p>
+            </label>
+        </div>
+    </div>
+    <script>
+        const border_id = document.getElementById('label_position_butt1')
+        const border_label = document.getElementById('label_posit')
+        const border_label_style = getComputedStyle(border_label);
+        border_label.style.display = 'none';
+        //border_id.style.display = 'none';
+        const label_position = document.getElementById('label_position')
+        const label_position1 = document.getElementById('label_position1')
+        const word = document.querySelectorAll('.label_position word')
+        const top1 = document.getElementById('top_input');
+        const background_color= document.getElementById('background_color');
+        const top_style = getComputedStyle(top1);
+        const label_position_input = document.querySelectorAll('.label_position input')
+        const label_position_butt = document.querySelectorAll('.label_position button')
+        const label_position_br = document.querySelectorAll('.label_position br')
+
+        let b_label = false;
+        border_id.addEventListener('click', function(){
+            if(border_label_style.display ==='none'){
+                border_label.style.display = 'block'
+            }
+            else if(border_label_style.display ==='block'){
+                border_label.style.display = 'none'
+            }
+        })
+        label_position.addEventListener('click', function(){
+            console.log( top_style.display)
+            if(top_style.display === 'none'){
+                //border_id.style.display = 'inline';
+                for(var i=0; i<word.length; i++){
+                    word[i].style.display = 'inline';    
+                }
+                for(var i=0; i<label_position_br.length; i++){
+                    label_position_br[i].style.display = 'block';    
+                    console.log(label_position_br[i].outerHTML)
+                }
+                for(var i=0; i<label_position_input.length; i++){
+                    label_position_input[i].style.display = 'block';    
+                } 
+                
+                for(var i=0; i<label_position_butt.length; i++){
+                    label_position_butt[i].style.display = 'block';    
+                } 
+                top1.style.display = 'block';
+                                  
+            }
+            
+            else if(top_style.display ==='block'){
+                top1.style.display = 'none';
+                console.log(true)                 
+                b_label = false
+                //border_id.style.display = 'none';
+                for(var i=0; i<word.length; i++){
+                    word[i].style.display = 'none';    
+                }
+                for(var i=0; i<label_position_br.length; i++){
+                    label_position_br[i].style.display = 'none';    
+                    console.log(label_position_br[i].outerHTML)
+                }
+                for(var i=0; i<label_position_input.length; i++){
+                    label_position_input[i].style.display = 'none';    
+                }
+                
+                for(var i=0; i<label_position_butt.length; i++){
+                    label_position_butt[i].style.display = 'none';    
+                } 
+            } 
+        })
+        
+        
+        
+        const sidebar = document.getElementById('sidebar');
+        sidebar.style.display = 'flex';
+        const labelid = document.getElementById('labelid');
+        // Example : Creating an element for 'back' functionality
+        const best_div = document.createElement('div');
+    
+        
+
+        console.log(best_div.innerHTML)
+        
+        const div_butt = document.querySelectorAll('.div_button button');
+        const div_in = document.querySelectorAll('.div_input button');
+        const div_in_list_sqr = [
+            '<button style="color:white; margin-top:70px;" onclick="showhtml(`id1`)"  id ="id1" >Create A Button</button>',
+            
+        ]        
+        const div_input1_list = [
+            '<br/>',
+            '<h2 id="text" style="color:black;">Input</h2>',
+            '<input style="margin-top:70px;" onclick="showhtml(`id17`)"  id ="id17" input " placeholder="Create A Input Text">',                    
+        ]                        
+        const div_input2_list = [
+            
+            '<input style="margin-top:70px;" type="file" onclick="showhtml(`id23`)"  id ="id23">',
+        ]
+        const div_input3_list=[
+
+            
+            '<input style="margin-top:70px;" type="color" / onclick="showhtml(`id27`)"  id ="id27">' 
+        ]
+        const div_input4_list  =[
+
+            
+            
+            '<input type="time" id="label_time" style="margin-top:70px;" onclick="showhtml(`id28`)"  id ="id28"/>'
+        ]                              
+        const div_input5_list = [ 
+
+            
+            '<input type="date" id="label_date" onclick="showhtml(`id29`)" style="margin-top:70px;" id ="id29"/>' 
+            
+        ]
+        const div_input6_list =[
+
+
+        '<input type="range"  style="margin-top:70px;" onclick="showhtml(`id30`)"  id ="id30"/>',
+        ]                                
+        const div_input7_list = [    
+            '<input type="email"  style="margin-top:70px;" placeholder="Write A Email..........." onclick="showhtml(`id31`)"  id ="id31"/>',
+
+        ]
+        
+        let previousContent = []; // Store previously displayed content
+const main = document.getElementById("main_div");
+function handleButtonClick(items) {
+    hideSidebar();
+    best_div.style.display = 'flex';
+    best_div.innerHTML = ''; // Clear existing content
+    best_div.classList.add('sidebar');
+    
+    populateDiv(items);
+    createBackButton(); // Create 'Back' button
+}
+let isDragging = false;
+    let isResizing = false;
+    let initialMouseX, initialMouseY;
+    let offsetX, offsetY;
+    let selectedImage = null;
+    let selectedHandle = null;
+    let id_tup = ''
+    let id_time =0;
+    let transparent = 'red';
+    const padding = document.getElementById('padding')
+    const padding_style = getComputedStyle(padding);
+    const padding_top = document.getElementById('padding_top');
+    const padding_bottom = document.getElementById('padding_bottom');
+    const padding_left = document.getElementById('padding_left');
+    const padding_right = document.getElementById('padding_right');
+    const margin = document.getElementById('margin')
+    
+    const margin_top = document.getElementById('margin_top');
+    const margin_bottom = document.getElementById('margin_bottom');
+    const margin_left = document.getElementById('margin_left');
+    const margin_right = document.getElementById('margin_right');
+const text_color = document.getElementById('text_color');
+const transparency = document.getElementById('transparency');
+const transparency_style = getComputedStyle(transparency);
+transparency.style.color = 'black';
+document.getElementById('text_label').style.display = 'none';
+function showhtml(id){ 
+
+    if(selectedImage){
+        padding.style.display = 'block';
+        
+        padding_top.addEventListener('input', function(){
+            console.log(padding_top.value)
+            selectedImage.style.paddingTop = padding_top.value +'px';
+        })
+        padding_bottom.addEventListener('input', function(){
+            selectedImage.style.paddingBottom = padding_bottom.value +'px';
+        })
+        padding_left.addEventListener('input', function(){
+            selectedImage.style.paddingLeft = padding_left.value +'px';
+        })
+        padding_right.addEventListener('input', function(){
+            selectedImage.style.paddingRight = padding_right.value +'px';
+        })
+        margin.style.display = 'block';
+        margin_top.addEventListener('input', function(){
+            
+            selectedImage.style.marginTop = margin_top.value +'px';
+        })
+        margin_bottom.addEventListener('input', function(){
+            selectedImage.style.marginBottom = margin_bottom.value +'px';
+        })
+        margin_left.addEventListener('input', function(){
+            selectedImage.style.marginLeft = margin_left.value +'px';
+        })
+        margin_right.addEventListener('input', function(){
+            selectedImage.style.marginRight = margin_right.value +'px';
+        })
+        const color_first = getComputedStyle(selectedImage).backgroundColor
+        transparency.addEventListener('click', function(){
+            console.log(true+'eei')
+            if(transparent ==='red'){
+                transparent = 'gray';
+                console.log('transparent')
+                selectedImage.style.backgroundColor = 'transparent';
+            }
+            else if(transparent ==='gray'){
+                transparent = 'red';
+                transparency.style.backgroundColor = 'black';
+                console.log('black')
+                selectedImage.style.backgroundColor = color_first;
+            }
+        })
+        
+        document.addEventListener('keydown', (event) =>{
+            console.log(event.key)
+            if(event.key ==='Control'){
+               selectedImage.classList.remove('selected');
+               selectedImage.classList.remove('draggable');
+               selectedImage.classList.remove('button');
+               selectedImage.removeAttribute('class');
+               selectedImage.removeAttribute('onclick');
+
+
+
+
+
+
+
+                const htmlContent = selectedImage.outerHTML
+                
+                console.log(htmlContent)
+                document.getElementById('main_div_result').style.fontSize = '13px'
+                document.getElementById('main_div_result').style.margin = '10px 10px 10px 10px'
+                document.getElementById('main_div_result').innerText = htmlContent;
+                const blob = new Blob([htmlContent], { type: 'text/html' });
+                const url = window.URL.createObjectURL(blob);
+                const a_ = document.getElementById('copy')
+                a_.innerText = 'Copy To Clipboard';
+                a_.style.display = 'block';
+                a_.style.color = 'white';
+                a_.style.fontSize = '12px';
+                a_.style.marginLeft = '10px';
+                a_.style.cursor = 'pointer';
+               // ... existing code
+
+a_.addEventListener('click', function(){
+    console.log(htmlContent);
+    navigator.clipboard.writeText(htmlContent);
+    alert('Copied To Clipboard');
+    
+    // Store in localStorage that the copy action was performed
+    localStorage.setItem('copyPerformed', 'true');
+
+     function test(){
+        window.location.href = 'creating.html';
+     }
+     setInterval(test, 1000)
+    
+})
+
+// Check for 'copyPerformed' flag when the page loads
+window.addEventListener('load', function() {
+    const copyPerformed = localStorage.getItem('copyPerformed');
+
+    if(copyPerformed === 'true') {
+        // Hide the 'Copy to Clipboard' element to prevent another copy
+        a_.style.display = 'none';
+        localStorage.removeItem('copyPerformed')
+        
+    }
+});
+
+                const a = document.createElement('a');
+                //a.href = url;
+                //a.download = 'image.html'; // Set a default filename
+                //a.click();
+                document.body.appendChild(a);
+            }
+        })
+        if(selectedImage.tagName ==='INPUT'){
+            const label2 = document.createElement('label');
+            const input_l = document.createElement('input');
+            input_l.style.display = 'block';
+
+            console.log(selectedImage.tagName)
+            label2.innerText = 'Placeholder';
+            input_l.placeholder = 'Write Your Own Placeholder';
+            label2.appendChild(input_l);
+            label_position1.appendChild(label2)
+            input_l.value = selectedImage.placeholder
+            input_l.addEventListener('input', function(){
+                selectedImage.placeholder = input_l.value
+            })
+
+        }
+        main.classList.remove('selected');
+        const selected_style = getComputedStyle(selectedImage)
+        document.getElementById('border_width').value = selected_style.borderWidth;
+        const border_color = document.getElementById('border_color');
+        border_color.addEventListener('change', function(){
+            console.log(border_color.innerText, border_color.value);
+            selectedImage.style.borderColor = border_color.value;
+            border_color.style.backgroundColor = border_color.value;
+            border_color.style.color = border_color.value;
+        });
+        text_color.addEventListener('change', function(){
+            selectedImage.style.color = text_color.value;
+            text_color.style.backgroundColor =text_color.value;
+            text_color.style.color = text_color.value;
+        })
+        background_color.addEventListener('change', function(){
+            console.log( border_color.value);
+            selectedImage.style.backgroundColor = background_color.value;
+            background_color.style.backgroundColor =background_color.value;
+            background_color.style.color = background_color.value;
+        })
+        document.getElementById('border_width').addEventListener('input', function(){
+            selectedImage.style.borderWidth = document.getElementById('border_width').value ;
+        })
+        document.getElementById('border_radius').value = selected_style.borderRadius;
+        document.getElementById('border_radius').addEventListener('input', function(){
+            selectedImage.style.borderRadius = document.getElementById('border_radius').value ;
+        })
+        document.getElementById('labelid')
+        labelid.innerText = selectedImage.tagName.toLowerCase() + " " +selectedImage.id
+        document.getElementById('font_input').value = selected_style.fontSize;
+        document.getElementById('font_input').addEventListener('input', function(){
+            selectedImage.style.fontSize  = document.getElementById('font_input').value 
+        })
+    }
+    if(selectedImage){
+        document.getElementById('text_label').style.display = 'block';
+        document.getElementById('text_input').value = selectedImage.innerText;
+        document.getElementById('text_input').addEventListener('input', function(){
+            selectedImage.innerText =document.getElementById('text_input').value
+        })
+        // Get the select element
+        const select = document.getElementById("fontSelector");
+        const fontList = [
+            "Arial",
+            "Verdana",
+            "Helvetica",
+            "Tahoma",
+            "Trebuchet MS",
+            "Times New Roman",
+            "Georgia",
+            "Garamond",
+            "Courier New",
+            "Brush Script MT",
+            "Comic Sans MS",
+            "Impact",
+            "Lucida Console",
+            "Lucida Sans Unicode",
+            "Palatino Linotype",
+            "Book Antiqua",
+            "Geneva",
+            "Arial Black",
+            "Gill Sans",
+            "Century Gothic",
+            "Franklin Gothic Medium",
+            "Optima",
+            "Baskerville",
+            "Bodoni MT",
+            "Didot",
+            "Futura",
+            "Copperplate",
+            "Rockwell",
+            "Perpetua",
+            "Avant Garde",
+            "Goudy Old Style",
+            "Lucida Bright",
+            "Candara",
+            "Consolas",
+            "Constantia",
+            "Corbel",
+            "Ebrima",
+            "Cambria",
+            "Calisto MT",
+            "Bell MT",
+            "Bauhaus 93",
+            "Kristen ITC",
+            "Century Schoolbook",
+            "Dubai",
+            "Javanese Text",
+            "Jokerman",
+            "Leelawadee",
+            "Magneto",
+            "MV Boli",
+            "Narkisim",
+            "Papyrus",
+            "Ravie",
+            "Segoe Script",
+            "Snap ITC",
+            "Tw Cen MT",
+            "Vladimir Script",
+            "Wide Latin",
+            "Harrington",
+            "High Tower Text",
+            "Informal Roman",
+            "Juice ITC",
+            "Kunstler Script",
+            "Old English Text MT",
+            "Poor Richard",
+            "Script MT",
+            "Showcard Gothic",
+            "Tempus Sans ITC",
+            "Vivaldi",
+            "Wingdings",
+            "Zapf Chancery",
+            "Courier",
+            "Monaco",
+            "Andale Mono",
+            "PT Mono",
+            "Fira Code",
+            "Inconsolata",
+            "Source Code Pro",
+            "IBM Plex Mono",
+            "Anonymous Pro",
+            "Cascadia Code",
+            "Ubuntu Mono",
+            "Roboto Mono",
+            "Hack",
+            "Liberation Mono",
+            "Menlo",
+            "Oxygen Mono",
+            "Space Mono",
+            "Fantasque Sans Mono",
+            "Noto Mono",
+            "DejaVu Sans Mono",
+            "Iosevka",
+            "JetBrains Mono",
+            "Consolas",
+            "Lucida Console",
+            "Bitstream Vera Sans Mono",
+            "Droid Sans Mono",
+            "Envy Code R",
+            "Monofur",
+            "Proggy Clean",
+            "Tewi",
+            "VL Gothic",
+            "WenQuanYi Zen Hei Mono",
+            "X.Org",
+            
+    "Open Sans",
+    "Roboto",
+    "Lato",
+    "Oswald",
+    "Montserrat",
+    "Raleway",
+    "Poppins",
+    "Ubuntu",
+    "Playfair Display",
+    "Nunito",
+    "Titillium Web",
+    "Merriweather",
+    "Pacifico",
+    "Roboto Slab",
+    "Dosis",
+    "Alegreya",
+    "Quicksand",
+    "Arimo",
+    "Muli",
+    "Abel",
+    "Karla",
+    "Cabin",
+    "Source Sans Pro",
+    "Work Sans",
+    "PT Sans",
+    "Bitter",
+    "Archivo",
+    "Fjalla One",
+    "Noto Sans",
+    "Barlow",
+    "Maven Pro",
+    "PT Serif",
+    "Josefin Sans",
+    "Montserrat",
+    "Oxygen",
+    "Arimo",
+    "Archivo Narrow",
+    "Chivo",
+    "Crimson Text",
+    "Archivo Black",
+    "Rubik",
+    "Anton",
+    "Exo",
+    "Libre Baskerville",
+    "Amaranth",
+    "Asap",
+    "Maven Pro",
+    "Cormorant",
+    "DM Sans",
+    "El Messiri",
+    "Jura",
+    "Kreon",
+    "Nunito Sans",
+    "Old Standard TT",
+    "Vollkorn",
+    "Vidaloka",
+    "Padauk",
+    "Overpass",
+    "Heebo",
+    "Adamina",
+    "Alegreya Sans",
+    "Gudea",
+    "Dancing Script",
+    "Signika",
+    "Mandali",
+    "Signika",
+    "Changa",
+    "Halant",
+    "Biryani",
+    "Overpass",
+    "Average",
+    "Domine",
+    "Nanum Gothic",
+    "Sarala",
+    "Yrsa",
+    "Mukta",
+    "Nunito",
+    "Jura",
+    "Tinos",
+    "Averia Serif Libre",
+    "Laila",
+    "BenchNine",
+    "Nanum Myeongjo",
+    "Kreon",
+    "Economica",
+    "Cabin Condensed",
+    "Asap Condensed",
+    "Quando",
+    "Antic Slab",
+    "Arya",
+    "Kite One",
+    "Voces",
+    "Overpass Mono",
+    "Encode Sans",
+    "PT Sans Narrow",
+    "Arsenal",
+    "Acme",
+    "Inder",
+    "Jaldi",
+    "Marmelad",
+    "Palanquin",
+    "Archivo Narrow",
+    "Palanquin Dark",
+    "Nanum Pen Script",
+    "Jost",
+    "Red Hat Display",
+    "Cabin Sketch",
+    "Saira",
+    "Asap",
+    "Eczar",
+    "Doppio One",
+    "Corben",
+    "Playfair Display",
+    "Hind Siliguri",
+    "Nobile",
+    "Sedgwick Ave",
+    "Baloo",
+    "Aref Ruqaa",
+    "Ledger",
+    "Cormorant Garamond",
+    "Pathway Gothic One",
+    "Cambay",
+    "Quattrocento Sans",
+    "Cherry Swash",
+    "Mukta Malar",
+    "Unna",
+    "Pompiere",
+    "Paytone One",
+    "Inria Serif",
+    "Arvo",
+    "Comfortaa",
+    "Karla",
+    "Khula",
+    "Varta",
+    "Miriam Libre",
+    "Encode Sans Expanded",
+    "Share Tech Mono",
+    "B612",
+    "Fira Sans Extra Condensed",
+    "Gotu",
+    "Archivo Black",
+    "Jomhuria",
+    "Lexend",
+    "Marcellus SC",
+    "Spectral",
+    "DM Serif Display",
+    "Ruslan Display",
+    "Zilla Slab",
+    "Inconsolata",
+    "Manrope",
+    "Grenze",
+    "Neuton",
+    "Cuprum",
+    "Cagliostro",
+    "Teko",
+    "Atma",
+    "Chela One",
+    "Federo",
+    "Poller One",
+    "Rubik Mono One",
+    "Pattaya",
+    "GFS Neohellenic",
+    "Nova Flat",
+    "Rouge Script",
+    "Averia Libre",
+    "Lusitana",
+    "Moul",
+    "Ramaraja",
+    "Fascinate",
+    "Glegoo",
+    "Warnes",
+    "Kurale",
+    "Ruthie",
+    "Ranchers",
+    "Keania One",
+    "Averia Sans Libre",
+    "Averia Serif Libre",
+    "Sura",
+    "Voces",
+    "Telex",
+    "Erica One",
+    "Hanalei",
+    "Smythe",
+    "Baloo Chettan",
+    "Elsie",
+    "Slackey",
+    "UnifrakturMaguntia",
+    "Trykker",
+    "Bilbo",
+    "KoHo",
+    "Artifika",
+    "Gilda Display",
+    "Bonbon",
+    "Donegal One",
+    "Iceland",
+    "Cutive",
+    "Crushed",
+    "Federant",
+    "Gorditas",
+    "Rokkitt",
+    "Rouge Script",
+    "Spicy Rice",
+    "Tulpen One",
+    "Annie Use Your Telescope",
+    "Bigelow Rules",
+    "Happy Monkey",
+    "Ruge Boogie",
+    "Zeyada",
+    "Medula One",
+    "Autour One",
+    "Cabin Sketch",
+    "Frijole",
+    "Freckle Face",
+    "Unlock",
+    "Unkempt",
+    "Risque",
+    "Ruslan Display",
+    "Averia Serif Libre",
+    "Kelly Slab",
+    "Erica One",
+    "Hanalei",
+    "Smythe",
+    "Baloo Chettan",
+    "Elsie",
+    "Slackey",
+    "UnifrakturMaguntia",
+    "Trykker",
+    "Bilbo",
+    "KoHo",
+    "Artifika",
+    "Gilda Display",
+    "Bonbon",
+    "Donegal One",
+    "Iceland",
+    "Cutive",
+    "Crushed",
+    "Federant",
+    "Gorditas",
+    "Rokkitt",
+    "Spicy Rice",
+    "Tulpen One",
+    "Annie Use Your Telescope",
+    "Bigelow Rules",
+    "Happy Monkey",
+    "Ruge Boogie",
+    "Zeyada",
+    "Medula One",
+    "Autour One",
+    "Cabin Sketch",
+    "Frijole",
+    "Freckle Face",
+
+
+];
+        const fontSizeSelector  =document.getElementById('fontSize')
+        for (let i = 1; i <= 72; i++) {
+            const option = document.createElement('option');
+            option.textContent = i + 'px';
+            option.value = i;
+            fontSizeSelector.appendChild(option);
+        }
+
+        fontSizeSelector.addEventListener('change', applyFontSize);
+
+        function applyFontSize(){
+            const selectedSize = fontSizeSelector.value;
+            document.getElementById('font_input').value = selectedSize +'px'
+            selectedImage.style.fontSize = selectedSize+'px'
+            
+        }
+        // Populate the select element with options
+        fontList.forEach(font => {
+        const option = document.createElement("option");
+        option.text = font;
+        option.style.fontFamily = font;
+        option.value = font;
+        select.appendChild(option);
+        });
+        const select_cursor = document.getElementById('cursor');
+        const select_cur = [
+            'alias',
+            'all-scroll',
+            'auto',
+            'not-allowed',
+            'cell',
+            'col-resize',
+            'context-menu',
+            'copy',
+            'crosshair',
+            'default',
+            'no-drop',
+            'e-resize',
+            'ew-resize',
+            'grab',
+            'grabbing',
+            'help',
+            'zoom-in',
+            'none',
+            'pointer',
+            'progress',
+            'text',
+            'vertical-text',
+            'zoom-out'
+        ]
+        select_cur.forEach(cur => {
+            const option = document.createElement("option");
+            option.text = cur;
+            option.style.cursor = cur;
+            option.value = cur;
+            select_cursor.appendChild(option);
+        });
+        select_cursor.addEventListener('change', applycursor);
+        function applycursor(){
+            const selectedSize =select_cursor.value;
+            document.getElementById('cursor').value = selectedSize 
+            selectedImage.style.cursor = selectedSize
+            
+        }
+
+        // Event listener to change the font when a new option is selected
+        select.addEventListener("change", function() {
+            selectedImage.style.fontFamily = this.value;
+        }); 
+        select_cursor.addEventListener("change", function() {
+            selectedImage.style.cursor = this.value;
+        }); 
+    }
+    if(!selectedImage){
+        console.log('hands off')
+        document.getElementById('text_label').style.display = 'none';
+        
+        
+    }
+
+    console.log(document.fonts)
+    const container = document.createElement('div');
+        container.classList.add('selected');
+
+        const img = document.getElementById(id);
+        
+        img.classList.add('button')   
+        img.classList.add('draggable');
+        
+        container.appendChild(img);
+        main.appendChild(container);
+    
+        img.addEventListener('mousedown', (e) => {
+            console.log('mouse down')
+  
+    e.preventDefault();
+    if (!isDragging) {
+      isDragging = true;
+      console.log(e.clientX, img.getBoundingClientRect().left)
+      initialMouseX = e.clientX - img.getBoundingClientRect().left;
+      initialMouseY = e.clientY - img.getBoundingClientRect().top;
+
+      if (selectedImage === img) {
+        selectedImage.classList.remove('selected');
+        if (selectedHandle) {
+          selectedHandle.style.display = 'none';
+        }
+        selectedImage = null;
+      } else {
+        if (selectedImage) {
+          selectedImage.classList.remove('selected');
+          if (selectedHandle) {
+            selectedHandle.style.display = 'none';
+          }
+        }
+        selectedImage = img;
+        selectedImage.classList.add('selected');
+        selectedHandle = img.handle;
+        if (selectedHandle) {
+          selectedHandle.style.display = 'block';
+        }
+      }
+    }
+  });
+  
+  document.addEventListener("mousemove", (e) => {
+    if (isDragging && selectedImage) {
+      const diffX = e.clientX - initialMouseX;
+      const diffY = e.clientY - initialMouseY;
+
+      selectedImage.style.left = diffX + 'px';
+      selectedImage.style.top = diffY + 'px';
+      const selected_style = getComputedStyle(selectedImage)
+      document.getElementById('width_input').value = parseInt( selected_style.width);
+        document.getElementById('height_input').value =parseInt( selected_style.height);
+        document.getElementById('top_input').value =parseInt( selected_style.top);
+        document.getElementById('bottom_input').value =parseInt( selected_style.bottom);
+        document.getElementById('left_input').value =parseInt( selected_style.left);
+        document.getElementById('right_input').value =parseInt( selected_style.right);
+        
+      if (selectedHandle) {
+        selectedHandle.style.left = (diffX - 5) + 'px';
+        selectedHandle.style.top = (diffY - 5) + 'px';
+      }
+    }
+  });
+let up = 0;
+let down = 0;
+let left = 0;
+let right = 0;
+const main_style = getComputedStyle(main)
+
+if(!selectedImage){
+    background_color.addEventListener('change', function(){
+            //console.log(border_color.innerText, border_color.value);
+        //    main.style.backgroundColor = background_color.value;
+          //  main.style.backgroundColor =background_color.value;
+            //background_color.style.color = background_color.value;
+    })
+    console.log(parseInt(main_style.width))
+    document.getElementById('width_input').value = parseInt(main_style.width);
+    document.getElementById('height_input').value =parseInt(main_style.height);
+    console.log('hands off')
+    border_label.style.display = 'none';
+    
+    document.getElementById('label_position1').style.display = 'none';
+    for(var i=0; i<word.length; i++){
+        word[i].style.display = 'none';    
+    }
+    for(var i=0; i<label_position_br.length; i++){
+        label_position_br[i].style.display = 'none';    
+        console.log(label_position_br[i].outerHTML)
+    }
+    for(var i=0; i<label_position_input.length; i++){
+        label_position_input[i].style.display = 'none';    
+    } 
+    
+    for(var i=0; i<label_position_butt.length; i++){
+        label_position_butt[i].style.display = 'none';    
+    }
+}
+else if (selectedImage){
+    
+    const selected_style = getComputedStyle(selectedImage);
+    console.log('hands in')
+    border_label.style.display = 'block';
+
+    document.getElementById('label_position1').style.display = 'block';
+    document.getElementById('width_input').value = parseInt( selected_style.width);
+    document.getElementById('height_input').value =parseInt( selected_style.height);
+    document.getElementById('top_input').value =parseInt( selected_style.top);
+    document.getElementById('bottom_input').value =parseInt( selected_style.bottom);
+    document.getElementById('left_input').value =parseInt( selected_style.left);
+    document.getElementById('right_input').value =parseInt( selected_style.right);
+    for(var i=0; i<word.length; i++){
+        word[i].style.display = 'inline';    
+    }
+    for(var i=0; i<label_position_br.length; i++){
+        label_position_br[i].style.display = 'block';    
+        console.log(label_position_br[i].outerHTML)
+    }
+    for(var i=0; i<label_position_input.length; i++){
+        label_position_input[i].style.display = 'block';    
+    } 
+    
+    for(var i=0; i<label_position_butt.length; i++){
+        label_position_butt[i].style.display = 'block';    
+    }
+        
+}
+document.getElementById('width_input').addEventListener('input', function(){
+    console.log(true)
+    console.log(document.getElementById('width_input').value)
+    selectedImage.style.width = document.getElementById('width_input').value +'px'
+})
+document.getElementById('top_input').addEventListener('input', function(){
+    console.log(true)
+    console.log(document.getElementById('top_input').value)
+    selectedImage.style.top = document.getElementById('top_input').value +'px'
+})
+document.getElementById('bottom_input').addEventListener('input', function(){
+    console.log(true)
+    console.log(document.getElementById('bottom_input').value)
+    selectedImage.style.bottom = document.getElementById('bottom_input').value +'px'
+})
+document.getElementById('left_input').addEventListener('input', function(){
+    console.log(true)
+    console.log(document.getElementById('left_input').value)
+    selectedImage.style.left = document.getElementById('left_input').value +'px'
+})
+document.getElementById('right_input').addEventListener('input', function(){
+    console.log(true)
+    console.log(document.getElementById('right_input').value)
+    selectedImage.style.right = document.getElementById('right_input').value +'px'
+})
+
+document.getElementById('height_input').addEventListener('input', function(){
+    console.log(true)
+    console.log(document.getElementById('height_input').value)
+    selectedImage.style.height = document.getElementById('height_input').value +'px'
+})
+
+
+    
+    if(selectedImage){
+        document.getElementById('width_input').value = selected_style.width;
+        document.getElementById('height_input').value = selected_style.height;
+        document.getElementById('top_input').value = selected_style.top;
+        document.getElementById('bottom_input').value = selected_style.bottom;
+        document.getElementById('left_input').value = selected_style.left;
+        document.getElementById('right_input').value = selected_style.right;
+        
+    }
+    else{
+        console.log('hands off')
+    }
+    if(!selectedImage){
+        console.log(parseInt(main_style.width))
+        document.getElementById('width_input').value = parseInt(main_style.width);
+        document.getElementById('height_input').value =parseInt(main_style.height);
+    }
+    if(selectedImage){
+        switch(event.key){
+            case 'ArrowUp':
+                up=50; 
+                console.log('moved Down',img.getBoundingClientRect().top)
+                const i_top1 = img.getBoundingClientRect().top;
+                selectedImage.style.top = i_top1 - up+'px';
+                break
+            case 'ArrowDown':
+                down=5; 
+                console.log('moved Down',img.getBoundingClientRect().top)
+                const i_top2 = img.getBoundingClientRect().top;
+                selectedImage.style.top = i_top2 + down+'px';
+                break    
+            case 'ArrowLeft':
+                left=5; 
+                console.log('moved Down',img.getBoundingClientRect().top)
+                const i_top3 = img.getBoundingClientRect().left;
+                selectedImage.style.left = i_top3 - left +'px';
+                break        
+            case 'ArrowRight':
+                right=5; 
+                console.log(right)
+                console.log('moved Down',img.getBoundingClientRect().left)
+                let i_top4 = img.getBoundingClientRect().left;
+
+                selectedImage.style.left = i_top4 + right +'px';
+                break        
+
+
+        }
+    }
+
+document.addEventListener("mouseup", () => {
+    isDragging = false;
+});    
+
+
+}
+function handleDivClick(items) {
+    hideSidebar();
+    best_div.style.display = 'flex';
+    best_div.innerHTML = ''; // Clear existing content
+    best_div.classList.add('sidebar');
+    best_div.style.backgroundColor = 'white';
+    best_div.style.paddingRight = '20px';
+    best_div.style.overflowY = 'scroll';
+    best_div.style.overflowX = 'hidden';
+
+    populateDiv(items);
+    createBackButton(); // Create 'Back' button
+}
+
+function createBackButton() {
+    const item_button = document.createElement('button');
+    item_button.innerText = '< Back';
+    item_button.style.color = 'green';
+    item_button.style.position = 'absolute';
+    item_button.style.left='50px';
+    item_button.style.top='-10px';
+    item_button.style.backgroundColor = 'transparent';
+    item_button.addEventListener('click', function() {
+            best_div.style.display = 'none';
+            showSidebar()
+            console.log('node')
+        
+    });
+    
+    best_div.appendChild(item_button);
+}
+
+
+function hideSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) {
+        sidebar.style.display = 'none';
+    }
+}
+function showSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    
+        sidebar.style.display = 'flex';
+    
+}
+
+function populateDiv(itemList) {
+    itemList.forEach(item => {
+        best_div.innerHTML += item;
+    });
+    previousContent.push(best_div.innerHTML); // Store the current content
+    document.body.appendChild(best_div);
+}
+
+function button() {
+    div_butt[0].addEventListener('click', function() {
+        handleButtonClick(div_in_list_sqr);
+    });
+
+    div_butt[1].addEventListener('click', function() {
+        handleButtonClick(div_in_list_round);
+    });
+
+    div_in[0].addEventListener('click', function() {
+        handleDivClick(div_input1_list);
+    });
+
+    div_in[1].addEventListener('click', function() {
+        handleDivClick(div_input2_list);
+    });
+
+    div_in[2].addEventListener('click', function() {
+        handleDivClick(div_input3_list);
+    });
+    div_in[3].addEventListener('click', function(){
+        handleDivClick(div_input4_list);
+    })  
+    div_in[4].addEventListener('click', function(){
+        handleDivClick(div_input5_list);
+    })  
+    div_in[5].addEventListener('click', function(){
+        handleDivClick(div_input6_list);
+    })  
+    div_in[6].addEventListener('click', function(){
+        handleDivClick(div_input7_list);
+    })  
+                    
+
+    for(var i = 0; i<div_in.length; i++)    {
+        //console.log(div_in[i])
+        console.log(div_in[i].innerHTML)
+    }
+            
+}
+        button()
+        
+        const div_button = document.getElementById('div_button');
+        const a_link = document.getElementById('a_link');
+        const div_style = getComputedStyle(div_button);
+        const a_style = getComputedStyle(a_link);
+        const div_input = document.getElementById('div_input');
+        const a_link1 = document.getElementById('a_link1');
+        const div_style1 = getComputedStyle(div_input);
+        const a_style1 = getComputedStyle(a_link1);
+        
+        console.log(a_style.top, div_style.top, a_style1.top, div_style1.top)
+        div_button.style.top = a_style.top;
+        div_input.style.top = a_style1.top;
+        div_button.style.top = parseInt(div_style.top) -70 +'px';
+        div_input.style.top = parseInt(div_style1.top) -70 +'px';
+        console.log(div_style.visibility, div_style1.visibility)
+        a_link.addEventListener('click', function(){
+            if(div_style.visibility === 'hidden'){
+                div_button.style.visibility = 'visible';
+            }
+            else if(div_style.visibility === 'visible'){
+                div_button.style.visibility = 'hidden';
+            }
+        })
+        a_link1.addEventListener('click', function(){
+            if(div_style1.visibility === 'hidden'){
+                div_input.style.visibility = 'visible';
+            }
+            else if(div_style1.visibility === 'visible'){
+                div_input.style.visibility = 'hidden';
+            }
+        })
+        document.addEventListener('DOMContentLoaded', function(){
+            const main_style  = getComputedStyle(main)
+            document.getElementById('width_input').value = parseInt(main_style.width);
+            document.getElementById('height_input').value =parseInt(main_style.height);
+            
+        })
+    </script>
+</body>
+</html>
