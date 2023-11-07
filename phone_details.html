@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dove Phone World</title>
+    
     <style>
         header{
             display: flex;
@@ -79,31 +80,7 @@
         .div_main{
             width: 100%;
             height: 400px;
-            background-color:rgb(20, 2, 20);
-            padding-top: 100px;
-            display: grid;
-            grid-template-columns: 300px 1fr;
             
-        }
-        .circle_phone{
-            border: none;
-            width: 100%;
-            height: 300px;
-            border-radius: 150px;
-            background-color: white;
-            margin-left: 40px;
-            
-        }
-        #swipe_img{
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            transition: all 5s;
-        }
-        #swipe_text{
-            color: whitesmoke;
-            transition: color 3s all 5s;
-            margin-left: 40px;
         }
         .text_div{
             width: 100%;
@@ -133,7 +110,6 @@
             font-weight: 400;
             
         }
-        
         #search::-webkit-search-cancel-button{
             
             border: 2px solid blue;
@@ -197,7 +173,35 @@
             display: block;
             text-decoration: none;
         }
-
+        .div{
+            display: grid;
+            grid-template-rows:1fr 1fr;
+            margin-bottom: 40px;
+            margin-top: 40px;
+            cursor: pointer;
+        }
+        .img{
+            width: 200px;
+            
+            cursor: pointer;
+        }
+        .titlee{
+            font-size: 23px;
+            margin-top: 40px;
+            font-weight: 300;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            letter-spacing: 2px;
+            line-height: 2px;
+        }
+        .div_lop{
+            display: inline-block;
+            width: 500px;
+        }
+        .div_control{
+            display: grid;
+            width: 100%;
+            
+        }
 
     </style>
 </head>
@@ -227,9 +231,9 @@
         </a>
         <div class="main_phone_products" id="main_phone_products">
             <a id="apple" href="phone_details.html" onclick="localStorage.setItem('lists', JSON.stringify(connect('apple'))); localStorage.setItem('title1','apple') ">Apple</a>
-            <a id="samsung" href="phone_details.html" onclick="localStorage.setItem('lists', JSON.stringify(connect('samsung'))); localStorage.setItem('title1','samsung') ">Samsung</a>
+            <a id="samsung" href="phone_details.html" onclick="localStorage.setItem('lists', JSON.stringify(connect('samsung'))); localStorage.setItem('title1','Samsung') ">Samsung</a>
             <a id="nokia" href="phone_details.html" onclick="localStorage.setItem('lists', JSON.stringify(connect('nokia'))); localStorage.setItem('title1','nokia') ">Nokia</a>
-            <a id="tecno" href="#">Tecno</a>
+            <a id="tecno" href="phone_details.html" onclick="localStorage.setItem('lists', JSON.stringify(connect('tecno'))); localStorage.setItem('title1','tecno') ">Tecno</a>
             <a id="redmi" href="#">Redmi</a>
         </div>
     </div>
@@ -256,29 +260,59 @@
     </div>
     
     </div>
-    <div class="div_main">
-        <div class="circle_phone" id="phone_swap">
-            <img id="swipe_img" alt="Swiping Pic">
-            <h2 id="swipe_text"></h2>
-        </div>        
-        <div class="text_div">
-            <h1>
-                Dove World
-            </h1>
-            <h2>
-                The Best Place To Get Your Own Device
-            </h2>
-            <h3>
-                Supported By Dove Unlimited Services
-            </h3>
-        </div>
+    <div class="div_main" id="div_main">
+       
     </div>
-    <p>Iphone 15</p>
-    <p>Iphone 14</p>
-    <p>Iphone 13</p>
-    <script src="main_phone.js">
+    
+    <script>
+    //    const phone_div1 = document.getElementById('main_phone_products')
+        const div_main = document.getElementById('div_main');
+        const redirect = JSON.parse(localStorage.getItem('lists'))
+        console.log(redirect)
         
-    </script>
-    <script src="main_phone_anime.js"></script>
+        const titlee = document.createElement('h1');
+        
+        titlee.innerText = localStorage.getItem('title1').toUpperCase();
+        
+        titlee.classList.add('titlee')
+        div_main.appendChild(titlee)
+        const img_link = JSON.parse(localStorage.getItem('image'))
+        const div_cotrol = document.createElement('div');
+        div_cotrol.classList.add('div_control')
+        for(var i= 0; i<redirect.length; i++){
+            const div_lop = document.createElement('div');
+            console.log(i)
+            const h3 = document.createElement('h3');
+            h3.innerText = redirect[i][0];
+            h3.style.marginTop = '40px'
+            div_lop.appendChild(h3)
+            const x = 3;
+            const gridTemplateColumns = `repeat(${x}, 1fr)`;
+            div_cotrol.style.gridTemplateColumns = gridTemplateColumns;
+            for(var j=1; j<redirect[i].length; j++){
+                const div = document.createElement('div');
+                const img = document.createElement('img');
+                const h2 = document.createElement('h2');
+                h2.id = redirect[i][j];
+                h2.innerText = redirect[i][j];
+                console.log(redirect[i][0]);
+                img.src = `${redirect[i][j]}.jpg`;
+                img.classList.add('img')
+                div.classList.add('div')
+                h2.classList.add('h2')
+                
+                div.appendChild(img)
+                div.appendChild(h2)
+                div_lop.appendChild(div)
+
+            }
+            
+            div_lop.classList.add('div_lop')
+            div_cotrol.appendChild(div_lop)
+        }
+        div_main.appendChild(div_cotrol)
+        
+</script>
+<script src="main_phone.js"></script>
 </body>
 </html>
