@@ -1,0 +1,462 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dove Phone World</title>
+    <style>
+        header{
+            display: flex;
+            justify-content: space-between;
+            
+            height: 100px;
+            
+        }
+        .left_header{
+            
+            width: 200px;
+            display: flex;
+            flex-shrink: 0;
+            vertical-align: center;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .left_header p{
+            display: flex;
+            flex-shrink: 0;
+            font-size: 16px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-style: oblique;
+            color: grey;
+
+        }
+        .middle_header{
+            display: flex;
+            width: 500px;
+            vertical-align: center;
+            align-items: center;
+
+        }
+        .middle_header input{
+            flex-shrink: 1;
+            flex: 1;
+            padding-left: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            height: 35px;
+            font-size: 17px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            outline: 2px;
+            font-weight: 400;
+            
+        }
+        .right_header{
+
+            display: flex;
+            flex-shrink: 0;   
+            vertical-align: center;
+            align-items: center;
+        }
+        .right_header button{
+            width: 140px;
+            flex-shrink: 0;   
+            height: 40px;
+            font-size: 16px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-style: oblique;
+            color: grey;
+            outline: 2px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            background-repeat: repeat-y;
+            background-size: 20px;
+            background-blend-mode: hard-light;
+            background-size: 30px;
+            font-weight: 400px;
+            border-radius: 20px;
+            
+        }
+        .div_main{
+            width: 100%;
+            height: 400px;
+            background-color: rgb(117, 44, 117);
+            padding-top: 100px;
+            display: grid;
+            grid-template-columns: 450px 1fr;
+            
+        }
+        .circle_phone{
+            height: 300px;
+            width: 300px;
+            
+            border-radius: 150px;
+            background-color: white;
+            margin-left: 40px;
+            
+        }
+        #swipe_img{
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transition: all 5s;
+        }
+        #swipe_text{
+            color: whitesmoke;
+            transition: color 3s all 5s;
+            margin-left: 40px;
+        }
+        .text_div{
+            width: 100%;
+            color: darksalmon;
+            display: flex;
+            
+            align-items:center;
+            
+            flex-direction: column;
+        }
+        .text_div h1{
+            font-size: 22px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: 400;
+            
+
+        }
+        .text_div h2{
+            font-size: 18px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: 400;
+            
+        }
+        .text_div h3{
+            font-size: 13px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: 400;
+            
+        }
+        #search::-webkit-search-cancel-button{
+            
+            border: 2px solid blue;
+        }
+        #search::-webkit-search-results-decoration{
+            
+            background-color: aqua;
+            border: 2px solid blue;
+        }
+        #search::-webkit-search-results-button{
+            
+            background-color: aqua;
+            border: 2px solid blue;
+        }
+        #search::-webkit-search-decoration{
+            background-color: aqua;
+            border: 2px solid blue;
+        }
+        #phone_a{
+            font-size: 21px;
+            color: black;
+            display: block;
+            text-decoration: none;
+
+
+        }
+        #other_a{
+            font-size: 21px;
+            color: black;
+            display: block;
+            text-decoration: none;
+
+
+        }
+        #laptop_a{
+            font-size: 21px;
+            color: black;
+            display: block;
+            text-decoration: none;
+        }
+        .div_phone{
+            width: 200px;
+            display: inline-block;
+        }
+        .div_laptop{
+            width: 200px;
+            display: inline-block;
+        }
+        .main_phone_products{
+            width: 400px;
+            display: inline;
+            transition: display 3s all 3s;
+        
+            
+        }
+        .main_phone_products a{
+            margin-top: 10px;
+            font-size: 18px;
+            color: #2e2b2b;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="left_header">
+            <img src="hamburger-menu.svg" style="width: 40px; height: 40px;">
+            <p style="margin: 0 0 0 0; display: inline;">Dove Phone World</p>
+
+        </div>
+        <div class="middle_header">
+
+            <input placeholder="Search For Products" id="search" type="search" list="joy"/>
+            <datalist id="joy">
+                
+            </datalist>            
+        </div>
+        <div class="right_header">
+            <button>
+                Contact Us
+            </button>
+        </div>
+    </header>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
+    <div class="div_phone">
+        <a id="phone_a" href="#">Phone Accessories
+        </a>
+        <div class="main_phone_products" id="main_phone_products">
+            <a id="apple" href="#">Apple</a>
+            <a id="samsung" href="#">Samsung</a>
+            <a id="nokia" href="#">Nokia</a>
+            <a id="tecno" href="#">Tecno</a>
+            <a id="redmi" href="#">Redmi</a>
+        </div>
+    </div>
+    <div class="div_laptop">
+        <a id="laptop_a" href="#">Laptop
+        </a>
+        <div class="main_phone_products" id="main_laptop_products">
+            <a id="apple_lap" href="#">Apple Laptop</a>
+            <a id="samsung_lap" href="#">Samsung Laptops</a>
+            <a id="hp" href="#">HP </a>
+            <a id="dell" href="#">Dell </a>
+            <a id="tosiba" href="#">Tosiba</a>
+        </div>
+    </div>
+    <div class="div_phone">
+        <a id="other_a" href="#">Other Accessories</a>
+        <div class="main_phone_products" id="other_products">
+            <a id="ps5" href="#">PS5</a>
+            <a id="radio" href="#">Radios</a>
+            <a id="Lamps" href="#">Lamps</a>
+            <a id="Tv`s" href="#">Tv`s</a>
+            <a id="Mobile_rollers" href="#">Redmi</a>
+        </div>
+    </div>
+    
+    </div>
+    <div class="div_main">
+        <div class="circle_phone" id="phone_swap">
+            <img id="swipe_img" alt="Swiping Pic">
+            <h2 id="swipe_text"></h2>
+        </div>        
+        <div class="text_div">
+            <h1>
+                Dove World
+            </h1>
+            <h2>
+                The Best Place To Get Your Own Device
+            </h2>
+            <h3>
+                Supported By Dove Unlimited Services
+            </h3>
+        </div>
+    </div>
+    <p>Iphone 15</p>
+    <p>Iphone 14</p>
+    <p>Iphone 13</p>
+    <script>
+        const phone_div = document.getElementById('main_phone_products')
+        const phon_style = getComputedStyle(phone_div);
+        const phone_a = document.getElementById('phone_a');
+        phone_div.style.display = 'none';
+        const laptop_div = document.getElementById('main_laptop_products')
+        const lap_style = getComputedStyle(laptop_div);
+        const laptop_a = document.getElementById('laptop_a');
+        laptop_div.style.display = 'none';
+        const other_div = document.getElementById('other_products')
+        const other_style = getComputedStyle(other_div);
+        const other_a = document.getElementById('other_a');
+        other_div.style.display = 'none';
+
+        phone_a.addEventListener('click', function(){
+            if(phon_style.display ==='none'){
+                phone_div.style.display = 'inline';
+                phone_div.style.transition = 'all 20s';
+                phone_a.style.textDecoration = 'underline';
+            }
+            else if(phon_style.display ==='inline'){
+                phone_div.style.display = 'none';
+                phone_div.style.transition = 'all 20s';
+                phone_a.style.textDecoration = 'none';
+            }
+        })
+        other_a.addEventListener('click', function(){
+            if(other_style.display ==='none'){
+                other_div.style.display = 'inline';
+                other_div.style.transition = 'all 20s';
+                other_a.style.textDecoration = 'underline';
+            }
+            else if(other_style.display ==='inline'){
+                other_div.style.display = 'none';
+                other_div.style.transition = 'all 20s';
+                other_a.style.textDecoration = 'none';
+            }
+        })
+        laptop_a.addEventListener('click', function(){
+            if(lap_style.display ==='none'){
+                laptop_div.style.display = 'inline';
+                laptop_div.style.transition = 'all 20s';
+                laptop_a.style.textDecoration = 'underline';
+            }
+            else if(lap_style.display ==='inline'){
+                laptop_div.style.transition = 'all 20s';
+                laptop_div.style.display = 'none';
+                laptop_a.style.textDecoration = 'none';
+            }
+        })
+        
+        const swipe = document.getElementById('phone_swap');
+        const swipe_img = document.getElementById('swipe_img');
+        const swipe_text = document.getElementById('swipe_text');
+        const phone_list =[
+            'Infinix amb.jpg',
+            'Nokia.jpg',
+            'apple.jpg',
+            
+            'itel.jpg',
+            'product_11.jpg',
+            'product_12.jpg',
+            'samsung amb.jpg',
+            'tecno amb.jpg',
+            
+            
+    ];
+    const phone_text =[
+            'INFINIX',
+            'NOKIA',
+            'APPLE',
+
+            'ITEL',
+            'PS5',
+            'SPEAKERS',
+            'SAMSUNG',
+            'TECNO',
+            
+            
+    ];
+    swipe_img.src= phone_list[0];
+    swipe_text.innerText = phone_text[0]
+    let img = 0;
+    function swipe_p(){        
+        img +=1;
+        
+        swipe_img.src = phone_list[img]
+        swipe_text.innerText = phone_text[img]
+        if(img>phone_list.length-1){
+        img=0
+            swipe_img.src= phone_list[0];
+            swipe_text.innerText = phone_text[0]
+        }
+
+    }
+    setInterval(swipe_p,3000)
+    document.querySelectorAll('p').forEach(each =>{
+        each.style.display = 'none'
+    })
+    
+    const dt = document.querySelectorAll('p').length
+    const dta = document.querySelectorAll('a').length
+    const data = document.getElementById('joy');
+    for (var i=0; i<dt; i++){
+        
+        
+        const opt = document.createElement('option');
+        opt.value = document.querySelectorAll('p')[i].textContent;
+        opt.textContent = document.querySelectorAll('p')[i].textContent;
+        data.appendChild(opt)
+
+
+    }
+    for (var i=0; i<dta; i++){
+        
+        
+        const opt = document.createElement('option');
+        opt.value = document.querySelectorAll('a')[i].textContent;
+        opt.textContent = document.querySelectorAll('a')[i].textContent;
+        data.appendChild(opt)
+
+
+    }
+    
+
+
+    const pElements = document.querySelectorAll('p');
+    const aElements = document.querySelectorAll('a');
+    const inputElement = document.getElementById('search');
+
+    inputElement.addEventListener('input', function() {
+        document.querySelectorAll('p').forEach(each =>{
+            each.style.display = 'none'
+        })
+     
+        const inputValue = inputElement.value.toLowerCase(); // Convert the input to lowercase for case-insensitive matching
+        
+        pElements.forEach(function(p) {
+            const text = p.textContent.toLowerCase(); // Convert the text content to lowercase
+            if (text.includes(inputValue)) {
+                p.style.display = 'block'         
+                p.style.color = 'gray';
+                p.style.opacity = '0.7';
+                
+            }
+            else {
+                // Reset the style for non-matching <p> elements
+                p.style.color = ''; // Reset to the default text color
+                p.style.opacity = '1'; // Reset opacity to 1 (fully visible)
+            }
+            
+            
+        });
+       
+    });
+
+    inputElement.addEventListener('change', function(){
+        
+        
+            for(var i = 0; i<pElements.length; i++){
+                if(pElements[i].innerText.toLowerCase() === inputElement.value.toLowerCase()){
+                    pElements[i].style.display = 'block';         
+                    pElements[i].style.color = 'black';
+                    pElements[i].style.opacity = '1';
+            
+                }   
+                
+            }
+            for(var i = 0; i<aElements.length; i++){
+                aElements[i].style.textDecoration = 'none';
+                if(aElements[i].innerText.toLowerCase() === inputElement.value.toLowerCase()){
+                    aElements[i].parentElement.style = 'inline-block';
+                    aElements[i].style.textDecoration = 'underline';
+
+                    aElements[i].style.display = 'block';         
+                    
+                    aElements[i].style.opacity = '1';
+            
+                }   
+            }
+        
+    });
+    </script>
+</body>
+</html>
