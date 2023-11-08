@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Search Input</title>
+  <style>
+    /* Basic CSS for the search container */
+.search-container {
+  position: relative;
+}
+
+#searchInput {
+  width: 300px;
+  padding: 10px;
+}
+
+.search-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  display: none;
+  width: 300px;
+  z-index: 1;
+}
+
+.search-results li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.search-results li:hover {
+  background: #f0f0f0;
+}
+
+  </style>
+</head>
+<body>
+
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="Search...">
+  <ul id="searchResults" class="search-results"></ul>
+</div>
+
+<script src="create _new_search.js">
+</script>
+</body>
+
+</html>
+
