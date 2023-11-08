@@ -219,3 +219,60 @@ document.addEventListener('click', function(e) {
   }
 });
 
+document.getElementById('search_now1').addEventListener('click', function(){    
+    for(var i = 0; i<connect('samsung').length; i++){
+        for(var j =0; j<connect('samsung')[i].length; j++){
+            console.log(connect('samsung')[i][j]);
+            if(connect('samsung')[i][j].toLowerCase() === searchInput.value.toLowerCase()){
+                window.location.href = 'phone_details.html';
+                console.log('samsung')
+                localStorage.setItem('lists', JSON.stringify(connect('samsung')));
+                localStorage.setItem('title1','samsung') 
+                window.location.href = `phone_details.html#${connect('samsung')[i][j]}`;
+            };
+            }
+        
+    }
+    console.log(connect('samsung'), connect('apple'))
+    for(var i = 0; i<connect('apple').length; i++){
+        for(var j =0; j<connect('apple')[i].length; j++){
+            if(connect('apple')[i][j].toLowerCase() === searchInput.value.toLowerCase()){
+                window.location.href = 'phone_details.html';
+                //document.getElementById('apple').click()          
+                //window.location.href = `#${connect('apple')[i][j]}`;
+                localStorage.setItem('lists', JSON.stringify(connect('apple')));
+                localStorage.setItem('title1','apple') 
+                window.location.href = `phone_details.html#${connect('apple')[i][j]}`;
+            } 
+            }
+        
+    }
+    for(var i = 0; i<connect('nokia').length; i++){
+        for(var j =0; j<connect('nokia')[i].length; j++){
+            if(connect('nokia')[i][j].toLowerCase() === searchInput.value.toLowerCase()){
+                window.location.href = 'phone_details.html';
+                localStorage.setItem('lists', JSON.stringify(connect('nokia')));
+                localStorage.setItem('title1','nokia') 
+                //window.location.href = `#${connect('nokia')[i][j]}`;
+                console.log('nokia 33')
+                
+            } 
+            }
+        
+    }
+    for(var i = 0; i<connect('tecno').length; i++){
+        for(var j =0; j<connect('tecno')[i].length; j++){
+            if(connect('tecno')[i][j].toLowerCase() === searchInput.value.toLowerCase()){
+                //document.getElementById('tecno').click()       
+                window.location.href = 'phone_details.html';
+                localStorage.setItem('lists', JSON.stringify(connect('tecno')));
+                localStorage.setItem('title1','tecno') 
+                //window.location.href = `phone_details.html#${connect('tecno')[i][j]}`;
+            } 
+            }
+        
+    }
+    
+    
+
+});
