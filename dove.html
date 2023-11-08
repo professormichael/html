@@ -8,6 +8,7 @@
     <title>Dove Phone World - Hub for smart mobile gadgets.</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="icon" href="https://dove.com.ng/img/logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
     <link rel="stylesheet" type="text/css" media="screen" href="https://dove.com.ng/css/main.css">
     <link rel="stylesheet" type="text/css" media="screen" href="https://dove.com.ng/css/bootstrap.css">
@@ -15,7 +16,52 @@
     <link rel="stylesheet" type="text/css" media="screen" href="https://dove.com.ng/css/bootstrap.min.css">
     <script src="https://dove.com.ng/js/bootstrap.js"></script>
     <script src="https://dove.com.ng/js/bootstrap.min.js"></script>
-    <script src='https://dove.com.ng/js/main.js'></script>
+    
+    <style>
+       .search-container {
+  position: relative;
+}
+
+#searchInput {
+  width: 100%;
+  height:70px ;
+  padding: 10px;
+  border: none;
+  vertical-align:middle ;
+  outline: none;
+}
+.container1{
+    display: grid;
+    background-color: #FFFFFF;
+    margin:0,0,0,0;
+    grid-template-columns: 1fr 30px 30px;
+    place-items: center;
+}
+.search-results {
+  list-style: none;
+  margin: 0;
+
+  padding: 0;
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  display: none;
+  width: 100%;
+  z-index: 1;
+}
+
+.search-results li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.search-results li:hover {
+  background: #f0f0f0;
+}
+ 
+    </style>    
+    
+    
 
 </head>
 
@@ -23,6 +69,14 @@
     <div class="loader-bg">
         <div class="loader"></div>
     </div>
+    <div class="search-container">
+        <div style="width: 100%;" class="container1">
+            <input type="text" id="searchInput" placeholder="Search...">
+            <i class="fa fa-search" style="color: black; cursor: pointer; width: 100%;" onclick="window.location.href = '#searchInput'" id="search_now1" ></i>        
+            <i class="fa fa-search" style="color: black; cursor: pointer; width: 100%;" onclick="window.location.href = '#searchInput'" id="search_now" ></i>        
+        </div>
+        <ul id="searchResults" class="search-results"></ul>
+      </div>
 
     <nav class="navbar navbar-expand-md mb-4">
 
@@ -208,6 +262,11 @@
                 <a href="https://wa.link/mmtqb6"><img src="https://dove.com.ng/img/chat-1.png" alt="whatsapp Logo" class="social-icons"></a>
 
             </div>
+            <div class="col-3 col-md" style="align-items: center; display: flex;">
+                    <i class="fa fa-search" style="font-weight: lighter; cursor: pointer;" onclick="window.location.href = '#searchInput';" id="search_icon"></i>
+                    
+                      
+            </div>
             <div class="col-3 col-md">
                 <a href="https://store.dove.com.ng"><img src="https://dove.com.ng/img/shopping-cart (2).png" alt="whatsapp Logo" class="social-icons"></a>
 
@@ -219,14 +278,17 @@
         </div>
     </footer>
 
-
+    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js " integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj " crossorigin="anonymous "></script>
     <script>
         window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js "><\/script>')
+            
     </script>
+    <script src="create _new_search.js"></script>
     <script src="../assets/dist/js/bootstrap.bundle.js "></script>
     <script src="https://dove.com.ng/js/bootstrap.js"></script>
     <script src="https://dove.com.ng/js/script.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 </body>
 
