@@ -199,6 +199,7 @@ i__.addEventListener('click', function(){
         i__.classList.add('fa')
         i__.classList.add('fa-search');
         searchNow1.style.display = 'none';
+        document.getElementById('search_now1').style.display ='none'
         searchInput.style.display = 'none';
         searchNow.style.display ='none';
     }
