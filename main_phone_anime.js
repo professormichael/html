@@ -1,4 +1,4 @@
-const swipe = document.getElementById('phone_swap');
+//const swipe = document.getElementById('phone_swap');
 const swipe_img = document.getElementById('swipe_img');
 const swipe_text = document.getElementById('swipe_text');
 const phone_list =[
