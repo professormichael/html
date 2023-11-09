@@ -131,13 +131,13 @@
        .div_button button{
         display: inline;
        }
-       .div_input{
+       .div_input,#div_input{
+        
         overflow: scroll;
         overflow-y: scroll;
         width: 200px;
         overflow-x: hidden;
         height: 200px;
-
        }
        
        
@@ -401,6 +401,8 @@
                 });
             });
             const inputColor = document.querySelectorAll('.color');
+            const id = []
+            
             
             inputColor.forEach(each=>{
                 const comment = document.createComment('This Is An Input Template To Help You In Styling More Inputs')

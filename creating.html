@@ -268,6 +268,10 @@
 
         </div>
         <a id="copy"></a>
+        <div id="second_div_result" style="color: white;">
+
+        </div>
+        <a id="copy_second"></a>
         <div class="setting_sidebar" id="setting_sidebar">
             <label for="width_input">
                 Width
@@ -362,6 +366,13 @@
                     </select>
                     
                 </label>
+                <label> Font Style
+                    <input id="font_style" type="text">
+                    <select id="fontStyle" style="background-color: gray;">
+                        
+                    </select>
+                    
+                </label>
                 
                 
             </label>
@@ -380,8 +391,7 @@
                 <word >Left</word>
                 <input id="left_input" type="number">
                 <word >px</word>
-                <br>
-                <word>Right</word>
+                <br>                <word>Right</word>
                 <input id="right_input" type="number">
                 <word >px</word>
                 <br>
@@ -593,7 +603,6 @@ const transparency_style = getComputedStyle(transparency);
 transparency.style.color = 'black';
 document.getElementById('text_label').style.display = 'none';
 function showhtml(id){ 
-
     if(selectedImage){
         padding.style.display = 'block';
         
@@ -639,37 +648,66 @@ function showhtml(id){
                 selectedImage.style.backgroundColor = color_first;
             }
         })
-        
+        /*
         document.addEventListener('keydown', (event) =>{
             console.log(event.key)
             if(event.key ==='Control'){
+                
                selectedImage.classList.remove('selected');
                selectedImage.classList.remove('draggable');
                selectedImage.classList.remove('button');
                selectedImage.removeAttribute('class');
                selectedImage.removeAttribute('onclick');
-
-
-
-
-
-
-
-                const htmlContent = selectedImage.outerHTML
-                
-                console.log(htmlContent)
-                document.getElementById('main_div_result').style.fontSize = '13px'
-                document.getElementById('main_div_result').style.margin = '10px 10px 10px 10px'
-                document.getElementById('main_div_result').innerText = htmlContent;
-                const blob = new Blob([htmlContent], { type: 'text/html' });
-                const url = window.URL.createObjectURL(blob);
-                const a_ = document.getElementById('copy')
-                a_.innerText = 'Copy To Clipboard';
-                a_.style.display = 'block';
-                a_.style.color = 'white';
-                a_.style.fontSize = '12px';
-                a_.style.marginLeft = '10px';
-                a_.style.cursor = 'pointer';
+               const inlineStyles = selectedImage.style.cssText;
+               const rule = inlineStyles;
+               selectedImage.removeAttribute('style')
+               // Insert the rule into the stylesheet
+        
+               // Output the rule to console
+               console.log('Created CSS rule:', rule);
+               const sty = '</'+ 'style' +'>';
+               console.log(sty)
+               const html1 = `
+               <html> 
+                    <head>
+                        <style>
+                            ${selectedImage.tagName.toLowerCase()}{
+                                ${rule}
+                            }
+                        ${sty}
+                    </head>
+                    <body>
+                        ${selectedImage.outerHTML}
+                    </body>
+                </html>
+               `;
+               console.log(html1)
+               document.getElementById('second_div_result').style.fontSize = '13px';
+               document.getElementById('second_div_result').style.margin = '10px 10px 10px 10px';
+               document.getElementById('second_div_result').innerText = html1;
+               
+               
+               const htmlContent = selectedImage.outerHTML ;
+               console.log(htmlContent);
+               document.getElementById('main_div_result').style.fontSize = '13px';
+               document.getElementById('main_div_result').style.margin = '10px 10px 10px 10px';
+               document.getElementById('main_div_result').innerText = htmlContent;
+               const blob = new Blob([htmlContent], { type: 'text/html' });
+               const url = window.URL.createObjectURL(blob);;
+               const a_ = document.getElementById('copy');
+               a_.innerText = 'Copy To Clipboard';
+               a_.style.display = 'block';
+               a_.style.color = 'white';
+               a_.style.fontSize = '12px';
+               a_.style.marginLeft = '10px';
+               a_.style.cursor = 'pointer';
+               const a1_ = document.getElementById("copy_second");
+               a1_.innerText = 'Copy To Clipboard';
+               a1_.style.display = 'block';
+               a1_.style.color = 'white';
+               a1_.style.fontSize = '12px';
+               a1_.style.marginLeft = '10px';
+               a1_.style.cursor = 'pointer';
                // ... existing code
 
 a_.addEventListener('click', function(){
@@ -698,6 +736,32 @@ window.addEventListener('load', function() {
         
     }
 });
+a1_.addEventListener('click', function(){
+    console.log(html1);
+    navigator.clipboard.writeText(html1);
+    alert('Copied To Clipboard');
+    
+    // Store in localStorage that the copy action was performed
+    localStorage.setItem('copyPerformed1', 'true1');
+
+     function test(){
+        window.location.href = 'creating.html';
+     }
+     setInterval(test, 1000)
+    
+})
+
+// Check for 'copyPerformed' flag when the page loads
+window.addEventListener('load', function() {
+    const copyPerformed1 = localStorage.getItem('copyPerformed1');
+
+    if(copyPerformed1 === 'true1') {
+        // Hide the 'Copy to Clipboard' element to prevent another copy
+        a1_.style.display = 'none';
+        localStorage.removeItem('copyPerformed1')
+        
+    }
+});
 
                 const a = document.createElement('a');
                 //a.href = url;
@@ -705,7 +769,7 @@ window.addEventListener('load', function() {
                 //a.click();
                 document.body.appendChild(a);
             }
-        })
+        })*/
         if(selectedImage.tagName ==='INPUT'){
             const label2 = document.createElement('label');
             const input_l = document.createElement('input');
@@ -722,7 +786,7 @@ window.addEventListener('load', function() {
             })
 
         }
-        main.classList.remove('selected');
+        //main.classList.remove('selected');
         const selected_style = getComputedStyle(selectedImage)
         document.getElementById('border_width').value = selected_style.borderWidth;
         const border_color = document.getElementById('border_color');
@@ -765,6 +829,7 @@ window.addEventListener('load', function() {
         })
         // Get the select element
         const select = document.getElementById("fontSelector");
+
         const fontList = [
             "Arial",
             "Verdana",
@@ -1196,6 +1261,39 @@ window.addEventListener('load', function() {
         select_cursor.addEventListener("change", function() {
             selectedImage.style.cursor = this.value;
         }); 
+        const font_styles = [
+                            "normal",
+                            "bold",
+                            "italic",
+                            "bold italic",
+                            "oblique",
+                            "lighter",
+                            "bolder",
+                            "initial",
+                            "inherit"
+                        ];
+
+
+        const fontStyleSelector  =document.getElementById('fontStyle')
+        font_styles.forEach(style => {
+            const option = document.createElement("option");
+            option.text = style;
+            option.style.fontStylel = style;
+            option.value = style;
+            fontStyleSelector.appendChild(option);
+        });
+        fontStyleSelector.addEventListener('change', applystyle);
+        function applystyle(){
+            console.log(fontStyleSelector.value)
+            const selectedStyle =fontStyleSelector.value;
+            document.getElementById('font_style').value = selectedStyle
+            selectedImage.style.fontStyle = selectedStyle;
+            
+        }
+        fontStyleSelector.addEventListener("change", function() {
+            selectedImage.style.fontStyle = this.value;
+        }); 
+
     }
     if(!selectedImage){
         console.log('hands off')
