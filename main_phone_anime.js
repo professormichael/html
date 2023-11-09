@@ -1,3 +1,21 @@
+const swipe = document.getElementById('phone_swap');
+const swipe_img = document.getElementById('swipe_img');
+const swipe_text = document.getElementById('swipe_text');
+const phone_list =[
+    'Infinix amb.jpg',
+    'Nokia.jpg',
+    'apple.jpg',
+    
+    'itel.jpg',
+    'product_11.jpg',
+    'product_12.jpg',
+    'samsung amb.jpg',
+    'tecno amb.jpg',
+    
+    
+];
+
+
 swipe_img.src= phone_list[0];
     swipe_text.innerText = phone_text[0]
     let img = 0;
