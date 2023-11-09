@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phone Selling Service</title>
+    <style>
+        /* Updated CSS styles for a more visually appealing layout */
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #333;
+        }
+        .product {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 70%;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .product img {
+            width: 200px;
+            height: auto;
+            margin: 0 20px;
+            border-radius: 10px;
+        }
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .product-info h2 {
+            color: #333;
+        }
+        .product-info p {
+            color: #777;
+            margin-top: 5px;
+        }
+        .product-info select, .product-info input {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 200px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Phone Selling Service</h1>
+    <div class="product">
+        <h2 id="h2">
+
+        </h2>
+        <img  alt="Phone Image" id="image">
+        <div class="product-info">
+            <h2>DOVE PHONE WORLD</h2>
+            <p id="p"></p>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <select id="quantity">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <!-- Add more quantity options if needed -->
+            </select>
+            <button id="buyButton">Buy Now</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('h2').innerText = JSON.parse(localStorage.getItem('current_name'));
+        document.getElementById('image').src = JSON.parse(localStorage.getItem('current_image'));
+        document.getElementById('p').innerText = JSON.parse(localStorage.getItem('current_price'));
+        let a = JSON.parse(localStorage.getItem('current_price1'));
+        a = a.replace(',','')        
+        document.getElementById('quantity').addEventListener('change', function(){
+            document.getElementById('p').innerText = 'Price: ' + document.getElementById('quantity').value * parseInt(a) 
+        })
+        document.getElementById('buyButton').addEventListener('click', function() {
+            var publicKey = 'pk_test_58efc86d2cf26d93272c3f79a8a4265b53c91387';
+
+            var selectedQuantity = document.getElementById('quantity').value;
+            var phonePrice =JSON.parse(localStorage.getItem('current_price')); // Example phone price (replace with e)
+            var amount = a * selectedQuantity * 100; // Convert to kobo
+            var email = document.getElementById('email').value;
+
+            var handler = PaystackPop.setup({
+                key: publicKey,
+                email: email, // Customer's email
+                amount: amount,
+                currency: 'NGN', // Transaction currency (replace with your currency)
+                ref: 'PHONE_' + Math.floor((Math.random() * 1000000000) + 1),
+                callback: function(response) {
+                    console.log(response);
+                    ert('Payment successful. Your order for Phone Model Name has been placed!');
+                },
+                onClose: function() {
+                    alert('Payment window closed');
+                }
+            });
+
+            handler.openIframe(); // Opens the Paystack payment window
+        });
+    </script>
+
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+</body>
+</html>

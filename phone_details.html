@@ -179,7 +179,7 @@
         }
         .div{
             display: grid;
-            grid-template-rows:1fr 1fr;
+            grid-template-rows:1fr 40px 50px;
             margin-bottom: 40px;
             margin-top: 40px;
             cursor: pointer;
@@ -280,6 +280,7 @@
         titlee.classList.add('titlee')
         div_main.appendChild(titlee)
         const img_link = JSON.parse(localStorage.getItem('image'))
+        const price = JSON.parse(localStorage.getItem('price'));
         const div_cotrol = document.createElement('div');
         div_cotrol.classList.add('div_control')
         for(var i= 0; i<redirect.length; i++){
@@ -293,20 +294,38 @@
             const gridTemplateColumns = `repeat(${x}, 1fr)`;
             div_cotrol.style.gridTemplateColumns = gridTemplateColumns;
             for(var j=1; j<redirect[i].length; j++){
+
                 const div = document.createElement('div');
                 const img = document.createElement('img');
                 const h2 = document.createElement('h2');
+                const h6 = document.createElement('h6');
+                const h6a = document.createElement('h6')
+                console.log(price[i][j])
+                h6a.innerText = price[i][j];
+                h6a.style.display = 'none';
+                h6.innerText =  price[i][j]
                 h2.id = redirect[i][j];
+                h2.style.height ='50px'
                 h2.innerText = redirect[i][j];
                 console.log(redirect[i][0]);
                 img.src = `${redirect[i][j]}.jpg`;
                 img.classList.add('img')
                 div.classList.add('div')
                 h2.classList.add('h2')
-                
+                div_lop.style.height = '300px'
                 div.appendChild(img)
                 div.appendChild(h2)
+                div.appendChild(h6)
+                div.appendChild(h6a)
                 div_lop.appendChild(div)
+                div.addEventListener('click', function(){
+                    localStorage.setItem('current_name', JSON.stringify(h2.innerText));
+                    localStorage.setItem('current_image', JSON.stringify(img.src));
+                    localStorage.setItem('current_price', JSON.stringify(h6.innerText));
+                    localStorage.setItem('current_price1', JSON.stringify(h6a.innerText));
+                    window.location.href = 'paystack.html'
+                })
+                h6.innerText = 'Price ' +  price[i][j]
 
             }
             

@@ -2,6 +2,7 @@ function connect(list){
     let title = list;
     let img =[];
     let phone_lists ;
+    let price;
     if(list ==='samsung'){
         
         phone_lists =[
@@ -26,6 +27,30 @@ function connect(list){
             ]
             
         ]
+        price = [
+            [
+                'price',
+                '120,000',
+                '126,000',
+                '125,000',
+                '129,000',
+                '124,000',
+                '123,000',
+                '154,000',
+                '126,000',
+                
+            ],[
+                'price',
+                '120,000',
+                '146,000',
+                '155,000',
+                '139,000',
+                '144,000',
+                '123,000',
+                
+            ]
+        ]
+        localStorage.setItem('price', JSON.stringify(price));
         //localStorage.setItem('lists', JSON.stringify(phone_lists))
         //for(var i= 0; i<phone_lists.length; i++){
             //  for(var j = 1; j<phone_lists[i].length; j++){
@@ -70,6 +95,35 @@ function connect(list){
             //  for(var j = 1; j<phone_lists[i].length; j++){
             
         //}
+        price = [
+            [
+                'price',
+                '120,000',
+                '126,000',
+                '125,000',
+                '129,000',
+                
+                
+            ],[
+                
+                'price',
+                '120,000',
+                '146,000',
+                '155,000',
+                '139,000',
+                
+            ]
+            ,[
+                
+                'price',
+                '120,000',
+                '146,000',
+                '155,000',
+             
+                
+            ]
+        ]
+        localStorage.setItem('price', JSON.stringify(price));
         
     
     }
@@ -83,10 +137,44 @@ function connect(list){
             
             ];
             img.push(`${phone_lists}`);
+
         
     //console.log(localStorage.getItem('image'))
     //console.log(localStorage.getItem('lists'),lo
-
+    price = [
+        [
+            'price',
+            '120,000',
+            '126,000',
+            
+        ],[
+            'price',
+            '120,000',
+            '146,000',
+            
+        ]
+        ,[
+            'price',
+            '120,000',
+            '146,000',
+            '120,000',
+            '120,000',
+        ]
+        ,[
+            'price',
+            '120,000',
+            '146,000',
+            '120,000',
+            '146,000',            
+        ]
+        ,[
+            'price',
+            '120,000',
+            '146,000',
+            '120,000',
+        ]
+    ]
+    localStorage.setItem('price', JSON.stringify(price));
     localStorage.setItem('image',JSON.stringify( img))
     localStorage.setItem('title', title)
     
@@ -102,7 +190,33 @@ function connect(list){
         
     //console.log(localStorage.getItem('image'))
     //console.log(localStorage.getItem('lists'),lo
-
+    price = [
+        [
+            'price',
+            '120,000',
+            '126,000',
+            '125,000',
+            '129,000',
+            '124,000',
+            
+        ],[
+            'price',
+            '120,000',
+            '146,000',
+            '155,000',
+            '139,000',
+            
+        ]
+        ,[
+            'price',
+            '120,000',
+            '146,000',
+            '155,000',
+            
+            
+        ]
+    ]
+    localStorage.setItem('price', JSON.stringify(price));
     localStorage.setItem('image',JSON.stringify( img))
     localStorage.setItem('title', title)
     

@@ -5,6 +5,9 @@
     <script src="js.js">
 
     </script>    
+    <script src="search.js">
+
+    </script>
     <title>Dove Phone World</title>
     <style>
         header{
@@ -230,9 +233,9 @@
         </a>
         <div class="main_phone_products" id="main_phone_products">
             <a id="apple" href="phone_details.html" onclick="localStorage.setItem('lists', JSON.stringify(connect('apple'))); localStorage.setItem('title1','apple') ">Apple</a>
-            <a id="samsung" href="phone_details.html" onclick="localStorage.setItem('lists', JSON.stringify(connect('samsung'))); localStorage.setItem('title1','samsung') ">Samsung</a>
+            <a id="samsung" href="phone_details.html" onclick="localStorage.setItem('lists', JSON.stringify(connect('samsung'))); localStorage.setItem('title1','Samsung') ">Samsung</a>
             <a id="nokia" href="phone_details.html" onclick="localStorage.setItem('lists', JSON.stringify(connect('nokia'))); localStorage.setItem('title1','nokia') ">Nokia</a>
-            <a id="tecno" href="#">Tecno</a>
+            <a id="tecno" href="phone_details.html" onclick="localStorage.setItem('lists', JSON.stringify(connect('tecno'))); localStorage.setItem('title1','tecno') ">Tecno</a>
             <a id="redmi" href="#">Redmi</a>
         </div>
     </div>
