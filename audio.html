@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Playlist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #181818;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 400px 1fr 400px;
+            place-content: center;
+            place-items: center;
+            column-gap: 50px;
+            height: 100vh;
+            color: #fff;
+        }
+        .playlist {
+            background-color: #282828;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            width: 100%;
+        }
+
+        .playlist-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .song {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+            transition: background-color 0.3s ease;
+        }
+
+        .song:last-child {
+            border-bottom: none;
+        }
+
+        .song:hover {
+            background-color: #333;
+        }
+
+        .song-info {
+            flex: 1;
+            padding-left: 10px;
+        }
+
+        .song-title {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        audio {
+            width: 200px;
+            margin-left: 10px;
+        }
+
+        button {
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            font-size: 18px;
+            color: #1db954;
+        }
+
+        button:hover {
+            color: #61ff61;
+        }
+        .audio-controls input[type="range"] {
+            width: 100%;
+            margin-top: 10px;
+            height: 1px;
+            background-color: #ccc;
+            border: none;
+        }
+
+        .audio-controls button {
+            margin-top: 10px;
+            background-color: #1db954;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .audio-controls button:hover {
+            background-color: #61ff61;
+        }
+        .volume-range {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            top: -40px;
+            left: -50px;
+            width: 100px;
+            background-color: #333;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .volume-icon:hover + .volume-range,
+        .volume-range:hover {
+            display: block;
+        }
+        .time,.time1{
+            display: grid;
+            width: 100%;
+            grid-template-columns: 20px 1fr 50px;
+            column-gap: 20px;
+            place-items: center;
+        }
+        .time1 input{
+            width: 100%;
+            margin-top: 5px;
+            height: 2px;
+            background-color: #ccc;
+            border: none;
+            outline: none;
+            
+        }
+
+        .volume-range input[type="range"] {
+            width: 80px;
+            margin-top: 5px;
+            height: 2px;
+            background-color: #ccc;
+            border: none;
+            outline: none;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .control-button {
+            background-color: #1db954;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .control-button:hover {
+            background-color: #61ff61;
+        }
+        .time-range {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .time-range,
+        .volume-range {
+            
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .volume-icon:hover + .volume-range,
+        .volume-range:hover {
+            display: block;
+        }
+        #left_control{
+            background-color: #181818;
+            width: 100%;
+            
+        }
+        
+        #library{
+            background-color:#181818;
+            overflow-y: scroll;
+            max-height:400px ;
+            width: 100%;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="left_control">
+<h3 style="margin-left: 30px; ">
+    Music
+</h3>
+    </div>
+    <div class="playlist">
+      <h1 class="playlist-title">Loading Music...</h1>
+    </div>
+<div id="library">
+    <h3>Library</h3>
+<button id="button">
+    <i class="fas fa-play"></i>
+</button>
+<div id="controlLibrary">
+
+</div>
+</div>
+    <script>
+        const audio_list = ['a1.mp3', 'a6.mp3', 'a3.mp3'];
+        const audio_title = ['Positions', 'Bad Liar', 'Let Me Down Slowly'];
+        const audio_artist = ['Ariana Grande', 'Anna Hamittion', 'Alec Benjamin'];
+        const audio_title3 = [];
+        const audio_artist3 = [];
+        let currentIndex = 0;
+        let audio = document.createElement('audio')
+        let isSeeking = false;
+        let library2 = [];
+        const playlist = document.querySelector('.playlist');
+        const songInfoDiv = document.createElement('div');
+        const songTitleP = document.createElement('p');
+        const artistP = document.createElement('p');
+        const time_div = document.createElement('div');
+        const left_second = document.createElement('p');
+        const timeRange = document.createElement('input');
+        const right_second = document.createElement('p');
+        const controlsDiv = document.createElement('div');
+        const prevButton = document.createElement('button');
+        const audioControls = document.createElement('div');
+        const nextButton = document.createElement('button');
+        const stopButton = document.createElement('button');
+        const pauseButton = document.createElement('button');
+        const playButton = document.createElement('button');
+        const left_control = document.getElementById("left_control");
+        const library = document.getElementById("library");
+        let isSeeking1 = false;
+        let isSeeking3 = false;
+        const au = document.createElement('audio');
+        let cuIndex = 0;
+        const songInfoDiv3 = document.createElement('div');
+        const songTitleP3 = document.createElement('p');
+        const artistP3 = document.createElement('p');
+        const time_div3 = document.createElement('div');
+        const left_second3= document.createElement('p');
+        const timeRange3 = document.createElement('input');
+        const right_second3 = document.createElement('p');
+        const controlsDiv3 = document.createElement('div');
+        const prevButton3 = document.createElement('button');
+        const audioControls3 = document.createElement('div');
+        const nextButton3 = document.createElement('button');
+        const stopButton3 = document.createElement('button');
+        const pauseButton3 = document.createElement('button');
+        const playButton3 = document.createElement('button');
+        const controlLibrary = document.getElementById("controlLibrary");
+        document.getElementById('button').addEventListener('click', function(){
+            //au.src = library2[cuIndex]
+            //au.play()
+            //au.addEventListener('ended', () => {
+                        //console.log(au.currentTime)
+                        //alert(au.currentTime)
+                        //cuIndex = (cuIndex + 1) ;
+                        //au.src = library2[cuIndex]
+                        //au.play()
+                        
+                    //});
+       
+            
+                    songInfoDiv3.classList.add('song-info');
+                    songTitleP3.classList.add('song-title');
+                    songTitleP3.textContent = audio_title3[cuIndex];
+
+                    
+                    artistP3.textContent = audio_artist3[cuIndex]; // Placeholder for artist
+
+                    
+                    timeRange3.type = 'range';
+                    timeRange3.min = 0;
+                    timeRange3.max = au.duration;
+                    timeRange3.step = 1;
+                    timeRange3.value = 0;
+                    timeRange3.classList.add('time-range');
+                    time_div3.classList.add('timediv')
+                    songInfoDiv3.appendChild(songTitleP3);
+                    songInfoDiv3.appendChild(artistP3);
+                    library.appendChild(songInfoDiv);
+
+                  
+                    controlsDiv3.classList.add('controls');
+
+                    
+                    prevButton3.classList.add('control-button');
+                    prevButton3.innerHTML = '<i class="fas fa-step-backward"></i>'; // Previous icon
+                    prevButton3.addEventListener('click', () => {
+                        console.log(cuIndex)
+                        cuIndex = (cuIndex - 1 );
+                        au.src = library2[cuIndex]
+                        au.play();
+                        artistP3.textContent = audio_artist3[cuIndex];
+                        songTitleP3.textContent = audio_title3[cuIndex];
+                        if(cuIndex <0){
+                            cuIndex =0
+                            au.src = library2[cuIndex]
+                            au.play();
+                            artistP3.textContent = audio_artist3[cuIndex];
+                            songTitleP3.textContent = audio_title3[cuIndex];
+                            
+                        }
+                    });
+
+                    
+                    playButton3.classList.add('control-button');
+                    playButton3.innerHTML = '<i class="fas fa-play"></i>'; // Play icon
+                    playButton3.addEventListener('click', () => {                        
+                        au.play();
+
+                    });
+
+                    
+                    pauseButton3.classList.add('control-button');
+                    pauseButton.innerHTML = '<i class="fas fa-pause"></i>'; // Pause icon
+                    pauseButton3.addEventListener('click', () => {
+                        au.pause();
+                    });
+
+                    
+                    stopButton3.classList.add('control-button');
+                    stopButton3.innerHTML = '<i class="fas fa-stop"></i>'; // Stop icon
+                    stopButton3.addEventListener('click', () => {
+                        au.pause();
+                        au.currentTime = 0;
+                    });
+                    
+                    
+                    nextButton3.classList.add('control-button');
+                    nextButton3.innerHTML = '<i class="fas fa-step-forward"></i>'; // Next icon
+                    nextButton3.addEventListener('click', () => {
+                        cuIndex = (cuIndex + 1);
+                        au.src = library2[cuIndex];
+                        //console.log(currentIndex)
+                        
+                        artistP3.textContent = audio_artist3[cuIndex];
+                        songTitleP3.textContent = audio_title3[cuIndex];
+                        console.log(audio_artist3, audio_title3, cuIndex)
+                        songInfoDiv3.appendChild(songTitleP3);
+                        songInfoDiv3.appendChild(artistP3);
+                        library.appendChild(songInfoDiv);
+                        au.play()
+                      
+                        if(cuIndex >audio_list.length){
+                            cuIndex =0
+                            au.src =library[cuIndex]
+                            au.play();
+                            artistP3.textContent = audio_artist3[cuIndex];
+                            songTitleP3.textContent = audio_title3[cuIndex];
+                        }
+                    });
+                    
+                    controlsDiv3.appendChild(prevButton3);
+                    controlsDiv3.appendChild(playButton3);
+                    controlsDiv3.appendChild(pauseButton3);
+                    controlsDiv3.appendChild(stopButton3);
+                    controlsDiv3.appendChild(nextButton3);
+                    library.appendChild(time_div3)
+                    library.appendChild(controlsDiv3);
+                    time_div3.classList.add('time1')
+                    
+                    audioControls3.classList.add('audio-controls');
+                    time_div3.appendChild(left_second3)
+                    
+                    time_div3.appendChild(timeRange3);
+                    time_div3.appendChild(right_second3)
+                    library.appendChild(audioControls3);
+
+                    const updateRange3 = () => {
+                        if (!isSeeking3) {
+                            timeRange3.value = au.currentTime;
+                        }
+                        requestAnimationFrame(updateRange3);
+                    };
+
+        //            au.play();
+                    updateRange3();
+
+                    timeRange3.addEventListener('input', () => {
+                        isSeeking3 = false;
+                        au.currentTime = timeRange3.value;
+                        //console.log(audio.currentTime)
+                        
+                    });
+                    
+                    au.addEventListener('timeupdate', () => {
+                            if (!isSeeking3) {
+                                timeRange3.value = au.currentTime;
+                                console.log(timeRange3.value)
+                        }
+                    });
+                
+                
+                let minute3 = 0;
+                let minute_r3 = 0;
+                let seconds_r3 = 0;                     
+                right_second3.innerText = `${minute_r3}:${seconds_r3}`
+                let seconds13 = 0;
+                    au.addEventListener('timeupdate', () => {
+                       // console.log(audio.currentTime)
+                       minute_r3 = Math.floor(au.duration /60);
+                       seconds_r3 = Math.floor(au.duration - minute_r3*60)
+                     seconds13 = Math.floor(au.currentTime);
+                        
+                        
+                        if(seconds13 >59){
+                            //console.log(true)
+                            minute3 =Math.floor(au.currentTime/60);
+                            seconds13 = Math.floor(au.currentTime - minute*60)
+                        }
+                        left_second3.innerText = `${minute3}:${seconds13}`
+                    
+                        if (!isSeeking3) {
+                            timeRange3.value = au.currentTime;
+                        }
+                        right_second3.innerText = `${minute_r3}:${seconds_r3}`;
+                    });
+
+                    audio.addEventListener('ended', () => {
+                        
+                        minute = 0;
+                        left_second3.innerText = `${minute3}:${seconds13}`
+
+                        cuIndex = (cuIndex + 1) ;
+                        artistP3.textContent = audio_artist3[cuIndex];
+                        songTitleP3.textContent = audio_title3[cuIndex];
+                        au.src = library2[cuIndex];
+                        
+                        au.play()
+                        
+                    });
+                //});
+            
+        
+
+        au.src = library2[cuIndex]
+        })
+        //for(var i = 0; i<library.length; i++){
+            
+        //}
+        for(var i = 0; i<audio_list.length; i++){
+            
+            let audio1 = document.createElement('audio')
+            const songInfoDiv1 = document.createElement('div');
+            const songTitleP1 = document.createElement('p');
+            const artistP1 = document.createElement('p');
+            const controlsDiv1 = document.createElement('div');
+            const playButton1 = document.createElement('button');
+            const libraryButton1 = document.createElement('button');
+            const left_control1 = document.getElementById("left_control");
+            songInfoDiv1.classList.add('song-info');
+            songTitleP1.classList.add('song-title');
+            songTitleP1.textContent = audio_title[i];
+            artistP1.textContent = audio_artist[i]; // Placeholder for artist
+            songInfoDiv1.appendChild(songTitleP1);
+            songInfoDiv1.appendChild(artistP1);
+            left_control.appendChild(songInfoDiv1);
+
+            controlsDiv1.classList.add('controls');
+            playButton1.classList.add('control-button');
+            playButton1.id = i;
+            playButton1.innerHTML = '<i class="fas fa-play"></i>'; // Play icon
+            libraryButton1.classList.add('control-button');
+            //playButton1.id = i;
+            libraryButton1.innerHTML = '+'; // Play icon
+            libraryButton1.addEventListener('click', function(){
+                const songInfoDiv2 = document.createElement('div');
+                const songTitleP2 = document.createElement('p');
+                const artistP2 = document.createElement('p');
+                songInfoDiv2.classList.add('song-info');
+                songTitleP2.classList.add('song-title');
+                library2.push(audio_list[playButton1.id])
+                console.log(library2)
+                audio_artist3.push(audio_artist[playButton1.id])
+                audio_title3.push(audio_title[playButton1.id])
+                songTitleP2.textContent = audio_title[playButton1.id];
+                artistP2.textContent = audio_artist[playButton1.id]; // Placeholder for artist
+                songInfoDiv2.appendChild(songTitleP2);
+                songInfoDiv2.appendChild(artistP2);
+                controlLibrary.appendChild(songInfoDiv2);
+          
+                
+            })
+            playButton1.addEventListener('click', () => {
+                    audio.src = audio_list[playButton1.id]
+                    
+                    console.log( playButton1.parentElement.className)
+                    songTitleP.textContent = audio_title[playButton1.id];
+                    artistP.textContent = audio_artist[playButton1.id]; // Placeholder for artist
+                    audio.play()
+            });
+
+                    
+                 
+                    controlsDiv1.appendChild(playButton1);
+                    controlsDiv1.appendChild(libraryButton1);
+                    left_control1.appendChild(controlsDiv1);
+                    
+                
+        }
+    //setTimeout(() => {        
+        
+                audio.pause();
+                
+
+                //audio.addEventListener('loadedmetadata', () => {
+                    document.querySelector('.playlist-title').textContent = '';
+                    
+                    songInfoDiv.classList.add('song-info');
+
+                    
+                    songTitleP.classList.add('song-title');
+                    songTitleP.textContent = audio_title[currentIndex];
+
+                    
+                    artistP.textContent = audio_artist[currentIndex]; // Placeholder for artist
+
+                    
+                    timeRange.type = 'range';
+                    timeRange.min = 0;
+                    timeRange.max = audio.duration;
+                    timeRange.step = 1;
+                    timeRange.value = 0;
+                    timeRange.classList.add('time-range');
+                    time_div.classList.add('timediv')
+                    songInfoDiv.appendChild(songTitleP);
+                    songInfoDiv.appendChild(artistP);
+                    playlist.appendChild(songInfoDiv);
+
+                  
+                    controlsDiv.classList.add('controls');
+
+                    
+                    prevButton.classList.add('control-button');
+                    prevButton.innerHTML = '<i class="fas fa-step-backward"></i>'; // Previous icon
+                    prevButton.addEventListener('click', () => {
+                        console.log(currentIndex)
+                        currentIndex = (currentIndex - 1 );
+                        audio.src = audio_list[currentIndex]
+                        audio.play();
+                        artistP.textContent = audio_artist[currentIndex];
+                        songTitleP.textContent = audio_title[currentIndex];
+                        if(currentIndex <0){
+                            currentIndex =0
+                            audio.src = audio_list[currentIndex]
+                            audio.play();
+                            artistP.textContent = audio_artist[currentIndex];
+                            songTitleP.textContent = audio_title[currentIndex];
+                            
+                        }
+                    });
+
+                    
+                    playButton.classList.add('control-button');
+                    playButton.innerHTML = '<i class="fas fa-play"></i>'; // Play icon
+                    playButton.addEventListener('click', () => {
+                        audio.play();
+                    });
+
+                    
+                    pauseButton.classList.add('control-button');
+                    pauseButton.innerHTML = '<i class="fas fa-pause"></i>'; // Pause icon
+                    pauseButton.addEventListener('click', () => {
+                        audio.pause();
+                    });
+
+                    
+                    stopButton.classList.add('control-button');
+                    stopButton.innerHTML = '<i class="fas fa-stop"></i>'; // Stop icon
+                    stopButton.addEventListener('click', () => {
+                        audio.pause();
+                        audio.currentTime = 0;
+                    });
+                    
+                    
+                    nextButton.classList.add('control-button');
+                    nextButton.innerHTML = '<i class="fas fa-step-forward"></i>'; // Next icon
+                    nextButton.addEventListener('click', () => {
+                        currentIndex = (currentIndex + 1);
+                        audio.src = audio_list[currentIndex];
+                        console.log(currentIndex)
+                        audio.play()
+                        artistP.textContent = audio_artist[currentIndex];
+                        songTitleP.textContent = audio_title[currentIndex];
+                        if(currentIndex >audio_list.length){
+                            currentIndex =0
+                            audio.src = audio_list[currentIndex]
+                            audio.play();
+                            artistP.textContent = audio_artist[currentIndex];
+                            songTitleP.textContent = audio_title[currentIndex];
+                        }
+                    });
+                    
+                    controlsDiv.appendChild(prevButton);
+                    controlsDiv.appendChild(playButton);
+                    controlsDiv.appendChild(pauseButton);
+                    controlsDiv.appendChild(stopButton);
+                    controlsDiv.appendChild(nextButton);
+                    playlist.appendChild(time_div)
+                    playlist.appendChild(controlsDiv);
+                    time_div.classList.add('time1')
+                    
+                    audioControls.classList.add('audio-controls');
+                    time_div.appendChild(left_second)
+                    
+                    time_div.appendChild(timeRange);
+                    time_div.appendChild(right_second)
+                    playlist.appendChild(audioControls);
+
+                    const updateRange = () => {
+                        if (!isSeeking) {
+                            timeRange.value = audio.currentTime;
+                        }
+                        requestAnimationFrame(updateRange);
+                    };
+
+                    audio.play();
+                    updateRange();
+
+                    timeRange.addEventListener('input', () => {
+                        isSeeking = false;
+                        audio.currentTime = timeRange.value;
+                        console.log(audio.currentTime)
+                        
+                    });
+                    
+                    audio.addEventListener('timeupdate', () => {
+                            if (!isSeeking) {
+                                timeRange.value = audio.currentTime;
+                                console.log(timeRange.value)
+                        }
+                    });
+                
+                
+                let minute = 0;
+                let minute_r = 0;
+                let seconds_r = 0;                     
+                right_second.innerText = `${minute_r}:${seconds_r}`
+                let seconds1 = 0;
+                    audio.addEventListener('timeupdate', () => {
+                       // console.log(audio.currentTime)
+                       minute_r = Math.floor(audio.duration /60);
+                       seconds_r = Math.floor(audio.duration - minute_r*60)
+                     seconds1 = Math.floor(audio.currentTime);
+                        
+                        
+                        if(seconds1 >59){
+                            console.log(true)
+                            minute =Math.floor(audio.currentTime/60);
+                            seconds1 = Math.floor(audio.currentTime - minute*60)
+                        }
+                        left_second.innerText = `${minute}:${seconds1}`
+                    
+                        if (!isSeeking) {
+                            timeRange.value = audio.currentTime;
+                        }
+                        right_second.innerText = `${minute_r}:${seconds_r}`;
+                    });
+
+                    audio.addEventListener('ended', () => {
+                        console.log(audio.currentTime)
+                        alert(audio.currentTime)
+                        minute = 0;
+                        left_second.innerText = `${minute}:${seconds1}`
+
+                        currentIndex = (currentIndex + 1) ;
+                        artistP.textContent = audio_artist[currentIndex];
+                        songTitleP.textContent = audio_title[currentIndex];
+                        audio.src = audio_list[currentIndex]
+                        audio.play()
+                        
+                    });
+                //});
+            
+        
+
+        audio.src = audio_list[currentIndex]
+    //}, 3000); // Delay for 3 seconds to simulate loading
+    </script>
+</body>
+</html>
