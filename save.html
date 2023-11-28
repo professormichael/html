@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Audio File Upload</title>
+</head>
+<body>
+  <h2>Upload Audio File</h2>
+  <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <input type="submit" value="Upload">
+    <progress id="uploadProgress" max="100" value="0" style="display: none;"></progress>
+    <span id="uploadStatus"></span>
+  </form>
+
+  <h2>Uploaded Audio Files</h2>
+  <ul id="audioList"></ul>
+  <button id="refreshButton">Refresh List</button>
+
+  <script>
+    function fetchAudioFiles() {
+      fetch('https://polarized-trail-diascia.glitch.me/confirm') // Replace with your server URL
+        .then(response => response.json())
+        .then(data => {
+          const audioList = document.getElementById('audioList');
+          audioList.innerHTML = ''; // Clear previous list items
+          data.forEach(file => {
+            const listItem = document.createElement('li');
+            const audio = document.createElement('audio');
+            audio.controls = true;
+            const source = document.createElement('source');
+            source.src = `https://polarized-trail-diascia.glitch.me/files/${file.filename}`; // Replace with your server URL
+            audio.appendChild(source);
+            listItem.appendChild(audio);
+            audioList.appendChild(listItem);
+          });
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    // Fetch uploaded files when the page loads
+    fetchAudioFiles();
+
+    // Upload form submission with fetch
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const formData = new FormData(this);
+      const uploadProgress = document.getElementById('uploadProgress');
+      const uploadStatus = document.getElementById('uploadStatus');
+
+      fetch('https://polarized-trail-diascia.glitch.me/upload', {
+        method: 'POST',
+        body: formData,
+        onUploadProgress: function(progressEvent) {
+          const { loaded, total } = progressEvent;
+          const percentCompleted = Math.round((loaded / total) * 100);
+          uploadProgress.value = percentCompleted;
+          if (percentCompleted === 100) {
+            uploadStatus.textContent = 'File uploaded successfully.';
+            setTimeout(() => {
+              uploadStatus.textContent = '';
+              uploadProgress.value = 0;
+              this.reset();
+            }, 3000); // Reset form after 3 seconds
+          } else {
+            uploadStatus.textContent = `Uploading... ${percentCompleted}%`;
+          }
+        }
+      })
+      .then(response => response.text())
+      .then(data => {
+        console.log(data); // Log the server response
+        fetchAudioFiles(); // Refresh the list of uploaded files
+      })
+      .catch(error => console.error('Error:', error));
+    });
+
+    // Refresh the list of audio files
+    document.getElementById('refreshButton').addEventListener('click', function() {
+      fetchAudioFiles();
+    });
+  </script>
+</body>
+</html>
