@@ -47,31 +47,38 @@
       const uploadProgress = document.getElementById('uploadProgress');
       const uploadStatus = document.getElementById('uploadStatus');
 
-      fetch('https://polarized-trail-diascia.glitch.me/upload', {
-        method: 'POST',
-        body: formData,
-        onUploadProgress: function(progressEvent) {
-          const { loaded, total } = progressEvent;
-          const percentCompleted = Math.round((loaded / total) * 100);
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://polarized-trail-diascia.glitch.me/upload', true);
+
+      // Track progress
+      xhr.upload.onprogress = function(event) {
+        if (event.lengthComputable) {
+          const percentCompleted = Math.round((event.loaded / event.total) * 100);
           uploadProgress.value = percentCompleted;
-          if (percentCompleted === 100) {
-            uploadStatus.textContent = 'File uploaded successfully.';
-            setTimeout(() => {
-              uploadStatus.textContent = '';
-              uploadProgress.value = 0;
-              this.reset();
-            }, 3000); // Reset form after 3 seconds
-          } else {
-            uploadStatus.textContent = `Uploading... ${percentCompleted}%`;
-          }
+          uploadStatus.textContent = `Uploading... ${percentCompleted}%`;
         }
-      })
-      .then(response => response.text())
-      .then(data => {
-        console.log(data); // Log the server response
-        fetchAudioFiles(); // Refresh the list of uploaded files
-      })
-      .catch(error => console.error('Error:', error));
+      };
+
+      // Handle successful upload
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          uploadStatus.textContent = 'File uploaded successfully.';
+          setTimeout(() => {
+            uploadStatus.textContent = '';
+            uploadProgress.value = 0;
+            fetchAudioFiles(); // Refresh the list of uploaded files
+            document.getElementById('uploadForm').reset(); // Reset the form
+          }, 3000); // Reset form after 3 seconds
+        }
+      };
+
+      // Handle error during upload
+      xhr.onerror = function() {
+        uploadStatus.textContent = 'File upload failed.';
+      };
+
+      // Send the form data
+      xhr.send(formData);
     });
 
     // Refresh the list of audio files
