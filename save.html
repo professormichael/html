@@ -4,10 +4,95 @@
   <title>Audio File Upload</title>
 </head>
 <body>
+  <style>body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #000;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    color: aliceblue;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+
+  }
+
+  #uploadForm {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+  }
+
+  input[type="text"],
+  input[type="number"] {
+    width: calc(100% - 20px);
+    margin: 10px 0;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  #uploadProgress {
+    width: calc(100% - 32px);
+    height: 10px;
+    margin-top: 20px;
+    display: none;
+  }
+
+  #uploadStatus {
+    text-align: center;
+    margin-top: 20px;
+    color: #000000;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 12px 20px;
+    background-color: #1db954;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  input[type = 'file']{
+    color: #000;
+    height: 30px;
+    font-size: 15px;
+  }
+  input[type = 'file'] ::-webkit-file-upload-button{
+    color: #000;
+    height: 30px;
+    font-size: 27px;
+  }
+  button[type ='submit']{
+    background-color: #453333;
+    
+    padding: 10px 40px 10px 40px;
+  }
+  button:hover {
+    background-color: #169f40;
+  }
+
+  /* Enhance label on file hover */
+  
+  </style>
   <h2>Upload Audio File</h2>
   <form id="uploadForm" enctype="multipart/form-data">
+    <input type="text" name="audioName" placeholder="Audio Name" id="name">
+    <input type="text" name="artistName" placeholder="Artist Name" id="artist">
+    <input type="number" name="year" placeholder="Year" id="year">
+    <input type="text" name="genre" placeholder="Genre" id="genre">
+
     <input type="file" name="file">
-    <input type="submit" value="Upload">
+    <button type="submit">Upload</button>
     <progress id="uploadProgress" max="100" value="0" style="display: none;"></progress>
     <span id="uploadStatus"></span>
   </form>
@@ -18,39 +103,57 @@
 
   <script>
     function fetchAudioFiles() {
-      fetch('https://polarized-trail-diascia.glitch.me/confirm') // Replace with your server URL
-        .then(response => response.json())
-        .then(data => {
-          const audioList = document.getElementById('audioList');
-          audioList.innerHTML = ''; // Clear previous list items
-          data.forEach(file => {
-            const listItem = document.createElement('li');
-            const audio = document.createElement('audio');
-            audio.controls = true;
-            const source = document.createElement('source');
-            source.src = `https://polarized-trail-diascia.glitch.me/files/${file.filename}`; // Replace with your server URL
-            audio.appendChild(source);
-            listItem.appendChild(audio);
-            audioList.appendChild(listItem);
-          });
-        })
-        .catch(error => console.error('Error:', error));
-    }
+    fetch('https://polarized-trail-diascia.glitch.me/confirm')
+      .then(response => response.json())
+      .then(data => {
+        const audioList = document.getElementById('audioList');
+        audioList.innerHTML = ''; // Clear previous list items
+        data.forEach(file => {
+          const listItem = document.createElement('li');
+          const audio = document.createElement('audio');
+          audio.controls = true;
+          const source = document.createElement('source');
+          source.src = `https://polarized-trail-diascia.glitch.me/files/${file.filename}`;
+          audio.appendChild(source);
 
-    // Fetch uploaded files when the page loads
-    fetchAudioFiles();
+          // Create a div to hold information about the audio
+          const audioInfo = document.createElement('div');
+          audioInfo.innerHTML = `
+            <p><strong>Audio Name:</strong> ${document.getElementById('name').value}</p>
+            <p><strong>Artist Name:</strong> ${document.getElementById('artist').value}</p>
+            <p><strong>Genre:</strong> ${file.genre}</p>
+            <p><strong>Year:</strong> ${file.year}</p>
+          `;
+
+          listItem.appendChild(audio);
+          listItem.appendChild(audioInfo);
+          audioList.appendChild(listItem);
+        });
+      })
+      .catch(error => console.error('Error:', error));
+  }
+  fetchAudioFiles()
 
     // Upload form submission with fetch
     document.getElementById('uploadForm').addEventListener('submit', function(event) {
       event.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const artist = document.getElementById('artist').value;
+      const year = document.getElementById('year').value;
+      const genre = document.getElementById('genre').value;
+
+      const uploadObject = { name, artist, year, genre };
+
       const formData = new FormData(this);
+      formData.append('uploadObject', JSON.stringify(uploadObject));
+
       const uploadProgress = document.getElementById('uploadProgress');
       const uploadStatus = document.getElementById('uploadStatus');
 
       const xhr = new XMLHttpRequest();
       xhr.open('POST', 'https://polarized-trail-diascia.glitch.me/upload', true);
 
-      // Track progress
       xhr.upload.onprogress = function(event) {
         if (event.lengthComputable) {
           const percentCompleted = Math.round((event.loaded / event.total) * 100);
@@ -59,7 +162,6 @@
         }
       };
 
-      // Handle successful upload
       xhr.onload = function() {
         if (xhr.status === 200) {
           uploadStatus.textContent = 'File uploaded successfully.';
@@ -68,16 +170,14 @@
             uploadProgress.value = 0;
             fetchAudioFiles(); // Refresh the list of uploaded files
             document.getElementById('uploadForm').reset(); // Reset the form
-          }, 3000); // Reset form after 3 seconds
+          }, 3000);
         }
       };
 
-      // Handle error during upload
       xhr.onerror = function() {
         uploadStatus.textContent = 'File upload failed.';
       };
 
-      // Send the form data
       xhr.send(formData);
     });
 
