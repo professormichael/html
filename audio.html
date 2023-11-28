@@ -11,6 +11,7 @@
             background-color: #181818;
             margin: 0;
             padding: 0;
+            
             display: grid;
             grid-template-columns: 400px 1fr 400px;
             place-content: center;
@@ -18,6 +19,30 @@
             column-gap: 50px;
             height: 100vh;
             color: #fff;
+        }
+        @media only screen and (max-width: 768px) {
+            body{
+                padding-top: 70px;
+                display: grid;
+                grid-template-columns: 200px 1fr 200px;
+                place-content: center;
+                place-items: center;
+            }
+            .playlist {
+                width: 95%;
+            }
+
+            .song {
+                padding: 8px 0;
+            }
+
+            .audio-controls {
+                flex-direction: column;
+            }
+
+            button {
+                font-size: 16px;
+            }
         }
         .playlist {
             background-color: #282828;
@@ -41,7 +66,7 @@
             border-bottom: 1px solid #333;
             transition: background-color 0.3s ease;
         }
-
+        
         .song:last-child {
             border-bottom: none;
         }
@@ -181,15 +206,90 @@
         #left_control{
             background-color: #181818;
             width: 100%;
+            height: 500px;
+            overflow-y: scroll;
             
         }
+        #left_control::-webkit-scrollbar {
+  width: 5px; /* thin scrollbar */
+ 
+  /* or */
+}
+
+#left_control::-webkit-scrollbar-track {
+  background: #888; /* color of the scrollbar track */
+}
+
+#left_control::-webkit-scrollbar-thumb {
+  background:white; /* color of the scrollbar handle */
+  
+  width: 5px;
+  border-radius: 20px;
+}
+
+/* For Microsoft Edge */
+#left_control{
+  -ms-overflow-style: none; /* Hide the default scrollbar */
+  scrollbar-width: thin; /* Display a thin scrollbar */
+}
+
+/* For Mozilla Firefox */
+#left_control {
+  scrollbar-width: thin; /* Thin scrollbar */
+  /* or */
+  scrollbar-width: auto; /* Default browser scrollbar */
+}
+
+        #left{            
+            overflow-y: scroll;
+            height: 170px;
+            width: 100%;
+        }
+
         
         #library{
             background-color:#181818;
-            overflow-y: scroll;
-            max-height:400px ;
+            height: 500px;
+            max-height:500px ;
             width: 100%;
-            overflow-x: hidden;
+            overflow: hidden;
+        }
+        
+       /* For Webkit-based browsers like Chrome, Safari */
+#controlLibrary::-webkit-scrollbar {
+  width: 5px; /* thin scrollbar */
+ 
+  /* or */
+}
+
+#controlLibrary::-webkit-scrollbar-track {
+  background: #888; /* color of the scrollbar track */
+}
+
+#controlLibrary::-webkit-scrollbar-thumb {
+  background:white; /* color of the scrollbar handle */
+  
+  width: 5px;
+  border-radius: 20px;
+}
+
+/* For Microsoft Edge */
+#controlLibrary{
+  -ms-overflow-style: none; /* Hide the default scrollbar */
+  scrollbar-width: thin; /* Display a thin scrollbar */
+}
+
+/* For Mozilla Firefox */
+#controlLibrary {
+  scrollbar-width: thin; /* Thin scrollbar */
+  /* or */
+  scrollbar-width: auto; /* Default browser scrollbar */
+}
+
+        #controlLibrary{            
+            overflow-y: scroll;
+            height: 170px;
+            width: 100%;
         }
     </style>
 </head>
@@ -204,23 +304,46 @@
     </div>
 <div id="library">
     <h3>Library</h3>
-<button id="button">
-    <i class="fas fa-play"></i>
-</button>
-<div id="controlLibrary">
-
-</div>
+    <button id="button">
+        <i class="fas fa-play"></i>
+    </button>
+    <div id="controlLibrary" >
+    </div>
 </div>
     <script>
+        document.addEventListener('DOMContentLoaded', function(){
+        fetchAudioFiles();
+        
         const audio_list = ['a1.mp3', 'a6.mp3', 'a3.mp3'];
         const audio_title = ['Positions', 'Bad Liar', 'Let Me Down Slowly'];
         const audio_artist = ['Ariana Grande', 'Anna Hamittion', 'Alec Benjamin'];
-        const audio_title3 = [];
-        const audio_artist3 = [];
+        let audio_title3 = [];
+        let audio_artist3 = [];
         let currentIndex = 0;
         let audio = document.createElement('audio')
         let isSeeking = false;
         let library2 = [];
+        async function fetchAudioFiles() {
+            await fetch('https://polarized-trail-diascia.glitch.me/confirm') // Replace with your server URL
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                data.forEach(file => {
+                    nap()
+                    console.log(file)
+                    const name = `https://polarized-trail-diascia.glitch.me/files/${file.filename}`; // Replace with your server URL
+                    audio_list.push(name)
+                    audio_title.push(file["artist"])
+                    audio_artist.push(file["name"])
+                    console.log(audio_list, audio_artist, audio_title)
+                    console.log(file)    
+                })
+            })        
+
+    }
+    // Fetch uploaded files when the page loads
+    
+
         const playlist = document.querySelector('.playlist');
         const songInfoDiv = document.createElement('div');
         const songTitleP = document.createElement('p');
@@ -256,8 +379,12 @@
         const stopButton3 = document.createElement('button');
         const pauseButton3 = document.createElement('button');
         const playButton3 = document.createElement('button');
+        let k = 0;
         const controlLibrary = document.getElementById("controlLibrary");
         document.getElementById('button').addEventListener('click', function(){
+            //console.log(audio_artist, audio_title3)
+            au.style.position = 'fixed';
+            au.style.bottom = '0';
             //au.src = library2[cuIndex]
             //au.play()
             //au.addEventListener('ended', () => {
@@ -269,25 +396,31 @@
                         
                     //});
        
-            
-                    songInfoDiv3.classList.add('song-info');
-                    songTitleP3.classList.add('song-title');
-                    songTitleP3.textContent = audio_title3[cuIndex];
-
+            /*songTitleP.textContent = audio_title[currentIndex];
+            artistP.textContent = audio_artist[currentIndex]; // Placeholder for artist
+            songInfoDiv.appendChild(songTitleP);
+            songInfoDiv.appendChild(artistP);
+            playlist.appendChild(songInfoDiv);
+*/
+            songInfoDiv3.classList.add('song-info');
+            songTitleP3.classList.add('song-title');
+            songTitleP3.textContent = audio_title3[cuIndex];
+            songInfoDiv3.style.borderTop = '2px solid white';
+            songInfoDiv3.style.marginTop = '30px';
+            songTitleP3.style.marginTop = '10px'
+            //console.log(audio_artist3[cuIndex])
+            artistP3.textContent = audio_artist3[cuIndex]; // Placeholder for artist
                     
-                    artistP3.textContent = audio_artist3[cuIndex]; // Placeholder for artist
-
-                    
-                    timeRange3.type = 'range';
-                    timeRange3.min = 0;
-                    timeRange3.max = au.duration;
-                    timeRange3.step = 1;
-                    timeRange3.value = 0;
-                    timeRange3.classList.add('time-range');
-                    time_div3.classList.add('timediv')
-                    songInfoDiv3.appendChild(songTitleP3);
-                    songInfoDiv3.appendChild(artistP3);
-                    library.appendChild(songInfoDiv);
+            timeRange3.type = 'range';
+            timeRange3.min = 0;
+            timeRange3.max = au.duration;
+            timeRange3.step = 1;
+            timeRange3.value = 0;
+            timeRange3.classList.add('time-range');
+            time_div3.classList.add('timediv')
+            songInfoDiv3.appendChild(songTitleP3);
+            songInfoDiv3.appendChild(artistP3);
+            library.appendChild(songInfoDiv3);
 
                   
                     controlsDiv3.classList.add('controls');
@@ -296,12 +429,13 @@
                     prevButton3.classList.add('control-button');
                     prevButton3.innerHTML = '<i class="fas fa-step-backward"></i>'; // Previous icon
                     prevButton3.addEventListener('click', () => {
-                        console.log(cuIndex)
+                    //    console.log(cuIndex)
                         cuIndex = (cuIndex - 1 );
                         au.src = library2[cuIndex]
                         au.play();
                         artistP3.textContent = audio_artist3[cuIndex];
                         songTitleP3.textContent = audio_title3[cuIndex];
+                        
                         if(cuIndex <0){
                             cuIndex =0
                             au.src = library2[cuIndex]
@@ -317,12 +451,12 @@
                     playButton3.innerHTML = '<i class="fas fa-play"></i>'; // Play icon
                     playButton3.addEventListener('click', () => {                        
                         au.play();
-
+                        
                     });
 
                     
                     pauseButton3.classList.add('control-button');
-                    pauseButton.innerHTML = '<i class="fas fa-pause"></i>'; // Pause icon
+                    pauseButton3.innerHTML = '<i class="fas fa-pause"></i>'; // Pause icon
                     pauseButton3.addEventListener('click', () => {
                         au.pause();
                     });
@@ -345,10 +479,11 @@
                         
                         artistP3.textContent = audio_artist3[cuIndex];
                         songTitleP3.textContent = audio_title3[cuIndex];
-                        console.log(audio_artist3, audio_title3, cuIndex)
+                  //      console.log(audio_artist3, audio_title3, cuIndex)
                         songInfoDiv3.appendChild(songTitleP3);
                         songInfoDiv3.appendChild(artistP3);
-                        library.appendChild(songInfoDiv);
+                        
+                        controlLibrary.appendChild(songInfoDiv);
                         au.play()
                       
                         if(cuIndex >audio_list.length){
@@ -426,7 +561,7 @@
                         right_second3.innerText = `${minute_r3}:${seconds_r3}`;
                     });
 
-                    audio.addEventListener('ended', () => {
+                    au.addEventListener('ended', () => {
                         
                         minute = 0;
                         left_second3.innerText = `${minute3}:${seconds13}`
@@ -445,11 +580,10 @@
 
         au.src = library2[cuIndex]
         })
-        //for(var i = 0; i<library.length; i++){
-            
-        //}
+        function nap(){
+            left_control.innerHTML = '';
         for(var i = 0; i<audio_list.length; i++){
-            
+            console.log(audio_list)
             let audio1 = document.createElement('audio')
             const songInfoDiv1 = document.createElement('div');
             const songTitleP1 = document.createElement('p');
@@ -471,221 +605,239 @@
             playButton1.id = i;
             playButton1.innerHTML = '<i class="fas fa-play"></i>'; // Play icon
             libraryButton1.classList.add('control-button');
+            
             //playButton1.id = i;
             libraryButton1.innerHTML = '+'; // Play icon
             libraryButton1.addEventListener('click', function(){
-                const songInfoDiv2 = document.createElement('div');
-                const songTitleP2 = document.createElement('p');
-                const artistP2 = document.createElement('p');
-                songInfoDiv2.classList.add('song-info');
-                songTitleP2.classList.add('song-title');
+                const songInfoDiv4 = document.createElement('div');
+                const songTitleP4 = document.createElement('p');
+                const artistP4= document.createElement('p');
+                const controlsDiv4 =document.createElement('div');
+                const button = document.createElement('button')
+                button.innerHTML= '<i class="fa fas fa-trash"></i>';
+                k++
+                button.id = k
+                controlsDiv4.classList.add('controls');
+                
+                //console.log(k, button)
+                button.addEventListener('click', function(){
+                    audio_title3 = audio_title3.slice(button.id-1, button.id)
+                    audio_artist3 = audio_artist3.slice(button.id-1, button.id)
+                    console.log(audio_title3, audio_artist3)
+                    songInfoDiv4.innerHTML = '';
+                    //console.log(audio_title3)
+                    console.log(audio_title3[button.id-1])
+                    library2 = library2.splice(button.id-1, button.id)
+                    console.log(library2)
+                    
+                })
+                songInfoDiv4.classList.add('song-info');
+                songTitleP4.classList.add('song-title');
                 library2.push(audio_list[playButton1.id])
-                console.log(library2)
+                //console.log(library2)
                 audio_artist3.push(audio_artist[playButton1.id])
                 audio_title3.push(audio_title[playButton1.id])
-                songTitleP2.textContent = audio_title[playButton1.id];
-                artistP2.textContent = audio_artist[playButton1.id]; // Placeholder for artist
-                songInfoDiv2.appendChild(songTitleP2);
-                songInfoDiv2.appendChild(artistP2);
-                controlLibrary.appendChild(songInfoDiv2);
+                songTitleP4.textContent = audio_title[playButton1.id];
+                artistP4.textContent = audio_artist[playButton1.id]; // Placeholder for artist
+                songInfoDiv4.appendChild(songTitleP4);
+                songInfoDiv4.appendChild(button);
+                songInfoDiv4.appendChild(artistP4);
+                controlsDiv.appendChild(nextButton);
+                playlist.appendChild(time_div)
+                controlLibrary.appendChild(controlsDiv4);
+                controlLibrary.appendChild(songInfoDiv4);
+                
           
                 
             })
             playButton1.addEventListener('click', () => {
                     audio.src = audio_list[playButton1.id]
                     
-                    console.log( playButton1.parentElement.className)
+          //          console.log( playButton1.parentElement.className)
                     songTitleP.textContent = audio_title[playButton1.id];
                     artistP.textContent = audio_artist[playButton1.id]; // Placeholder for artist
                     audio.play()
             });
 
-                    
-                 
+                     
                     controlsDiv1.appendChild(playButton1);
                     controlsDiv1.appendChild(libraryButton1);
                     left_control1.appendChild(controlsDiv1);
                     
                 
-        }
-    //setTimeout(() => {        
-        
-                audio.pause();
-                
+        }            
+        console.log(audio_list);
+    }
+        audio.pause();            
+        document.querySelector('.playlist-title').textContent = '';
+        songInfoDiv.classList.add('song-info');
 
-                //audio.addEventListener('loadedmetadata', () => {
-                    document.querySelector('.playlist-title').textContent = '';
-                    
-                    songInfoDiv.classList.add('song-info');
-
-                    
-                    songTitleP.classList.add('song-title');
-                    songTitleP.textContent = audio_title[currentIndex];
-
-                    
-                    artistP.textContent = audio_artist[currentIndex]; // Placeholder for artist
-
-                    
-                    timeRange.type = 'range';
-                    timeRange.min = 0;
-                    timeRange.max = audio.duration;
-                    timeRange.step = 1;
-                    timeRange.value = 0;
-                    timeRange.classList.add('time-range');
-                    time_div.classList.add('timediv')
-                    songInfoDiv.appendChild(songTitleP);
-                    songInfoDiv.appendChild(artistP);
-                    playlist.appendChild(songInfoDiv);
-
-                  
-                    controlsDiv.classList.add('controls');
-
-                    
-                    prevButton.classList.add('control-button');
-                    prevButton.innerHTML = '<i class="fas fa-step-backward"></i>'; // Previous icon
-                    prevButton.addEventListener('click', () => {
-                        console.log(currentIndex)
-                        currentIndex = (currentIndex - 1 );
-                        audio.src = audio_list[currentIndex]
-                        audio.play();
-                        artistP.textContent = audio_artist[currentIndex];
-                        songTitleP.textContent = audio_title[currentIndex];
-                        if(currentIndex <0){
-                            currentIndex =0
-                            audio.src = audio_list[currentIndex]
-                            audio.play();
-                            artistP.textContent = audio_artist[currentIndex];
-                            songTitleP.textContent = audio_title[currentIndex];
-                            
-                        }
-                    });
-
-                    
-                    playButton.classList.add('control-button');
-                    playButton.innerHTML = '<i class="fas fa-play"></i>'; // Play icon
-                    playButton.addEventListener('click', () => {
-                        audio.play();
-                    });
-
-                    
-                    pauseButton.classList.add('control-button');
-                    pauseButton.innerHTML = '<i class="fas fa-pause"></i>'; // Pause icon
-                    pauseButton.addEventListener('click', () => {
-                        audio.pause();
-                    });
-
-                    
-                    stopButton.classList.add('control-button');
-                    stopButton.innerHTML = '<i class="fas fa-stop"></i>'; // Stop icon
-                    stopButton.addEventListener('click', () => {
-                        audio.pause();
-                        audio.currentTime = 0;
-                    });
-                    
-                    
-                    nextButton.classList.add('control-button');
-                    nextButton.innerHTML = '<i class="fas fa-step-forward"></i>'; // Next icon
-                    nextButton.addEventListener('click', () => {
-                        currentIndex = (currentIndex + 1);
-                        audio.src = audio_list[currentIndex];
-                        console.log(currentIndex)
-                        audio.play()
-                        artistP.textContent = audio_artist[currentIndex];
-                        songTitleP.textContent = audio_title[currentIndex];
-                        if(currentIndex >audio_list.length){
-                            currentIndex =0
-                            audio.src = audio_list[currentIndex]
-                            audio.play();
-                            artistP.textContent = audio_artist[currentIndex];
-                            songTitleP.textContent = audio_title[currentIndex];
-                        }
-                    });
-                    
-                    controlsDiv.appendChild(prevButton);
-                    controlsDiv.appendChild(playButton);
-                    controlsDiv.appendChild(pauseButton);
-                    controlsDiv.appendChild(stopButton);
-                    controlsDiv.appendChild(nextButton);
-                    playlist.appendChild(time_div)
-                    playlist.appendChild(controlsDiv);
-                    time_div.classList.add('time1')
-                    
-                    audioControls.classList.add('audio-controls');
-                    time_div.appendChild(left_second)
-                    
-                    time_div.appendChild(timeRange);
-                    time_div.appendChild(right_second)
-                    playlist.appendChild(audioControls);
-
-                    const updateRange = () => {
-                        if (!isSeeking) {
-                            timeRange.value = audio.currentTime;
-                        }
-                        requestAnimationFrame(updateRange);
-                    };
-
-                    audio.play();
-                    updateRange();
-
-                    timeRange.addEventListener('input', () => {
-                        isSeeking = false;
-                        audio.currentTime = timeRange.value;
-                        console.log(audio.currentTime)
-                        
-                    });
-                    
-                    audio.addEventListener('timeupdate', () => {
-                            if (!isSeeking) {
-                                timeRange.value = audio.currentTime;
-                                console.log(timeRange.value)
-                        }
-                    });
-                
-                
-                let minute = 0;
-                let minute_r = 0;
-                let seconds_r = 0;                     
-                right_second.innerText = `${minute_r}:${seconds_r}`
-                let seconds1 = 0;
-                    audio.addEventListener('timeupdate', () => {
-                       // console.log(audio.currentTime)
-                       minute_r = Math.floor(audio.duration /60);
-                       seconds_r = Math.floor(audio.duration - minute_r*60)
-                     seconds1 = Math.floor(audio.currentTime);
-                        
-                        
-                        if(seconds1 >59){
-                            console.log(true)
-                            minute =Math.floor(audio.currentTime/60);
-                            seconds1 = Math.floor(audio.currentTime - minute*60)
-                        }
-                        left_second.innerText = `${minute}:${seconds1}`
-                    
-                        if (!isSeeking) {
-                            timeRange.value = audio.currentTime;
-                        }
-                        right_second.innerText = `${minute_r}:${seconds_r}`;
-                    });
-
-                    audio.addEventListener('ended', () => {
-                        console.log(audio.currentTime)
-                        alert(audio.currentTime)
-                        minute = 0;
-                        left_second.innerText = `${minute}:${seconds1}`
-
-                        currentIndex = (currentIndex + 1) ;
-                        artistP.textContent = audio_artist[currentIndex];
-                        songTitleP.textContent = audio_title[currentIndex];
-                        audio.src = audio_list[currentIndex]
-                        audio.play()
-                        
-                    });
-                //});
             
-        
+            songTitleP.classList.add('song-title');
+            songTitleP.textContent = audio_title[currentIndex];
 
+            
+            artistP.textContent = audio_artist[currentIndex]; // Placeholder for artist
+
+            
+            timeRange.type = 'range';
+            timeRange.min = 0;
+            timeRange.max = audio.duration;
+            timeRange.step = 1;
+            timeRange.value = 0;
+            timeRange.classList.add('time-range');
+            time_div.classList.add('timediv')
+            songInfoDiv.appendChild(songTitleP);
+            songInfoDiv.appendChild(artistP);
+            playlist.appendChild(songInfoDiv);
+
+            
+            controlsDiv.classList.add('controls');
+
+            
+            prevButton.classList.add('control-button');
+            prevButton.innerHTML = '<i class="fas fa-step-backward"></i>'; // Previous icon
+            prevButton.addEventListener('click', () => {
+    //            console.log(currentIndex)
+                currentIndex = (currentIndex - 1 );
+                audio.src = audio_list[currentIndex]
+                audio.play();
+                artistP.textContent = audio_artist[currentIndex];
+                songTitleP.textContent = audio_title[currentIndex];
+                if(currentIndex <0){
+                    currentIndex =0
+                    audio.src = audio_list[currentIndex]
+                    audio.play();
+                    artistP.textContent = audio_artist[currentIndex];
+                    songTitleP.textContent = audio_title[currentIndex];
+                    
+                }
+            });
+
+            
+            playButton.classList.add('control-button');
+            playButton.innerHTML = '<i class="fas fa-play"></i>'; // Play icon
+            playButton.addEventListener('click', () => {
+                audio.play();
+            });
+
+            
+            pauseButton.classList.add('control-button');
+            pauseButton.innerHTML = '<i class="fas fa-pause"></i>'; // Pause icon
+            pauseButton.addEventListener('click', () => {
+                audio.pause();
+            });
+
+            
+            stopButton.classList.add('control-button');
+            stopButton.innerHTML = '<i class="fas fa-stop"></i>'; // Stop icon
+            stopButton.addEventListener('click', () => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
+            
+            
+            nextButton.classList.add('control-button');
+            nextButton.innerHTML = '<i class="fas fa-step-forward"></i>'; // Next icon
+            nextButton.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1);
+                audio.src = audio_list[currentIndex];
+        //          console.log(currentIndex)
+                audio.play()
+                artistP.textContent = audio_artist[currentIndex];
+                songTitleP.textContent = audio_title[currentIndex];
+                if(currentIndex >audio_list.length){
+                    currentIndex =0
+                    audio.src = audio_list[currentIndex]
+                    audio.play();
+                    artistP.textContent = audio_artist[currentIndex];
+                    songTitleP.textContent = audio_title[currentIndex];
+                }
+            });
+            
+            controlsDiv.appendChild(prevButton);
+            controlsDiv.appendChild(playButton);
+            controlsDiv.appendChild(pauseButton);
+            controlsDiv.appendChild(stopButton);
+            controlsDiv.appendChild(nextButton);
+            playlist.appendChild(time_div)
+            playlist.appendChild(controlsDiv);
+            time_div.classList.add('time1')
+            
+            audioControls.classList.add('audio-controls');
+            time_div.appendChild(left_second)
+            
+            time_div.appendChild(timeRange);
+            time_div.appendChild(right_second)
+            playlist.appendChild(audioControls);
+
+            const updateRange = () => {
+                if (!isSeeking) {
+                    timeRange.value = audio.currentTime;
+                }
+                requestAnimationFrame(updateRange);
+            };
+
+            audio.play();
+            updateRange();
+
+            timeRange.addEventListener('input', () => {
+                isSeeking = false;
+                audio.currentTime = timeRange.value;
+        //        console.log(audio.currentTime)
+                
+            });
+            
+            audio.addEventListener('timeupdate', () => {
+                    if (!isSeeking) {
+                        timeRange.value = audio.currentTime;
+            //              console.log(timeRange.value)
+                }
+            });
+        
+        
+        let minute = 0;
+        let minute_r = 0;
+        let seconds_r = 0;                     
+        right_second.innerText = `${minute_r}:${seconds_r}`
+        let seconds1 = 0;
+            audio.addEventListener('timeupdate', () => {
+                // console.log(audio.currentTime)
+                minute_r = Math.floor(audio.duration /60);
+                seconds_r = Math.floor(audio.duration - minute_r*60)
+                seconds1 = Math.floor(audio.currentTime);
+                
+                
+                if(seconds1 >59){
+            //        console.log(true)
+                    minute =Math.floor(audio.currentTime/60);
+                    seconds1 = Math.floor(audio.currentTime - minute*60)
+                }
+                left_second.innerText = `${minute}:${seconds1}`
+            
+                if (!isSeeking) {
+                    timeRange.value = audio.currentTime;
+                }
+                right_second.innerText = `${minute_r}:${seconds_r}`;
+            });
+
+            audio.addEventListener('ended', () => {
+                //  console.log(audio.currentTime)
+                alert(audio.currentTime)
+                minute = 0;
+                left_second.innerText = `${minute}:${seconds1}`
+
+                currentIndex = (currentIndex + 1) ;
+                artistP.textContent = audio_artist[currentIndex];
+                songTitleP.textContent = audio_title[currentIndex];
+                audio.src = audio_list[currentIndex]
+                audio.play()
+                
+            });
+        //});
         audio.src = audio_list[currentIndex]
-    //}, 3000); // Delay for 3 seconds to simulate loading
+//}, 3000); // Delay for 3 seconds to simulate loading
+        })
     </script>
 </body>
 </html>
