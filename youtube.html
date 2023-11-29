@@ -706,7 +706,7 @@ body, html{
         const thumbnail = document.createElement('img');
         thumbnail.classList.add('thumbnail');
         thumbnail.src = img1[i]['first']
-        thumbnail.style.height = '168px'
+        thumbnail.style.height = '100%'
         const time_div = document.createElement('div');
         time_div.classList.add('time-div')
         time_div.innerText = img1[i]['time']
@@ -719,7 +719,7 @@ body, html{
         const profile_pics =document.createElement('img');
         profile_pics.classList.add('profile-pics');
         profile_pics.src= img1[i]['second'];
-        profile_pics.style.height = '100%'
+        profile_pics.style.height = '40px'
         thumbnail_all.appendChild(profile_pics_div);
         profile_pics_div.appendChild(profile_pics);
         const text_div = document.createElement('div');
