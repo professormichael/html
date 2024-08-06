@@ -29,24 +29,24 @@
             
             box-sizing: border-box;
         }
-        #code{
+        #code, #code1, #code2, #code3{
             height: 100%;
             outline: none;
-            background: transparent;
+            background: black;
             border: none;
         }
         #editor {
             margin-left: 40px;
-            width: 900px;
+            
             margin-top: 100px;
         }
-        #code {
+        #code, #code1, #code2, #code3 {
             width: 100%;
             
             border: none;
-            background-color: #fff;
+            background-color:black;
             padding: 10px;
-            color: #000;
+            color: red;
         }
         .tab_div{
             
@@ -68,14 +68,55 @@
             letter-spacing: 2px;
             
         }
+        header{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr ;
+            column-gap: 20px;
+
+        }
+        header div{
+            display: grid;
+            place-content: center;
+            place-items: center;
+            border: 1px solid #ccc;
+            border-top-left-radius:50px ;
+            border-top-right-radius:50px ;
+            font-size: 20px;
+            font-weight: 500;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            
+            
+        }
 
     </style>
 </head>
 <body>
+        
+    <header>
+        <div id="html" class="html">
+            <p id="title_html">
+                index.html
+            </p>
+        </div>
+        <div id="css" class="css">
+            <p id="title_css">
+                style.css
+            </p>
+        </div>
+        <div id="script" class="script">
+            <p id="script_script">
+                script.js
+            </p>
+        </div>
+    </header>
     <div id="div">
-    <div id="sidebar">
-        <h2>HTML Code</h2>
-        <textarea id="code" autocomplete="off" spellcheck="false" onkeydown="updatePreview()"></textarea>
+        <div id="sidebar">
+    
+
+        <textarea id="code1" autocomplete="off" spellcheck="false" onkeydown="updatePreview1()" ></textarea>
+        <textarea id="code2" autocomplete="off" spellcheck="false" onkeydown="updatePreview1()" ></textarea>
+        <textarea id="code3" autocomplete="off" spellcheck="false" onkeydown="updatePreview1()" ></textarea>
+        <textarea id="code" autocomplete="off" spellcheck="false" onkeydown="updatePreview()" style="display: none;"></textarea>
     </div>
     <div id="editor" class="editor">
         <div class="tab_div" >
@@ -88,38 +129,95 @@
     </div>
 
     <script>
-
-
-  // ... other JavaScript code ...
-        
+    const html_c = document.getElementById("html");
+    const css = document.getElementById("css");
+    const script_c = document.getElementById("script");
+        const codeTextarea1 = document.getElementById("code1");
+        const codeTextarea2 = document.getElementById("code2");
+        const codeTextarea3 = document.getElementById("code3");
         const codeTextarea = document.getElementById("code");
         const previewFrame = document.getElementById("preview");
         let p = ['<' ,'/script>']
         const ni =  p[0] + p[1];
-
-        const tag =['<a','<body', '<style','<head', '<code','<div','<footer','<p','<h1','<h2','<h3','<h4','<h5','<h6','<iframe', '<img', '<video','<audio','<li','<ul','<script','<html']
-        codeTextarea.value +=`
-<!Doctype>    
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title id='titlew'>
-                    
-        </title>
-        <style>
-
-        </style>    
-    </head>
-    <body>
-        <script>
+        html_c.addEventListener('click', function(){
+            codeTextarea1.style.display = 'block';
+            html_c.style.backgroundColor = 'gray';
+            css.style.backgroundColor = 'white';
+            script_c.style.backgroundColor = 'white';
+            codeTextarea2.style.display = 'none';
+            codeTextarea3.style.display = 'none';
+        })
+        css.addEventListener('click', function(){
+            html_c.style.backgroundColor = 'white';
+            css.style.backgroundColor = 'gray';
+            script_c.style.backgroundColor = 'white';
             
-        ${ni}    
-    </body>    
-</html>
+            codeTextarea1.style.display = 'none';
+            codeTextarea2.style.display = 'block';
+            codeTextarea3.style.display = 'none';
+        })
+        script_c.addEventListener('click', function(){
+            html_c.style.backgroundColor = 'white';
+            css.style.backgroundColor = 'white';
+            script_c.style.backgroundColor = 'gray';
+            
+            codeTextarea1.style.display = 'none';
+            codeTextarea2.style.display = 'none';
+            codeTextarea3.style.display = 'block';
+            
+        })
+        const tag =['<a','<body', '<style','<head', '<code','<div','<footer','<p','<h1','<h2','<h3','<h4','<h5','<h6','<iframe', '<img', '<video','<audio','<li','<ul','<script','<html']
+        codeTextarea1.value +=`
+                    <!Doctype>    
+                    <html>
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title id='titlew'>
+                                        
+                            </title>
+                            <style>
+
+                            </style>    
+                        </head>
+                        <body>
+                            
+                        </body>    
+                    </html>
         
         `;
+        var on = codeTextarea1.value;
+        on.replace('</body>' ,'')
+        on.replace('</html>', '')
+        on.replace('<!Doctype>', '')
+        on.replace('<html>', '')
+        on.replace('<html>', '')
+        on.replace('</head>', '')
+        on.replace('<meta charset="UTF-8">', '')
+        on.replace('<title id=`titlew`>', '')
+        on.replace('<meta name="viewport" content="width=device-width, initial-scale=1.0">', '')
+        on.replace('</title>', '')
+        on.replace('<styl>e', '')
+        on.replace('</style>', '')
+        codeTextarea.value =`
+        <!Doctype>    
+                    <html>
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title id='titlew'>
+                                        
+                            </title>
+                            <style>
+
+                            </style>    
+                        </head>
+        //${on}  \n </html>
+        //`;
+        
         codeTextarea.addEventListener("input", updatePreview);
+        codeTextarea1.addEventListener("input", updatePreview1);    
+        
         const iframe = document.getElementById("preview"); // Assuming "preview" is the ID of your iframe
         iframe.addEventListener("load", function () {
     // The iframe has loaded, so you can now access its content
@@ -137,8 +235,6 @@
         console.log("No title element found in the iframe.");
     }
 });
-
-
 
 
         function updatePreview() {
@@ -166,6 +262,43 @@
             const title1 = '<title';
 
 
+}
+function updatePreview1(){
+    
+        var on = codeTextarea1.value;
+        on.replace('</body>' ,'')
+        on.replace('</html>', '')
+        on.replace('<!Doctype>', '')
+        on.replace('<html>', '')
+        on.replace('<html>', '')
+        on.replace('</head>', '')
+        on.replace('<meta charset="UTF-8">', '')
+        on.replace('<title id=`titlew`>', '')
+        on.replace('<meta name="viewport" content="width=device-width, initial-scale=1.0">', '')
+        on.replace('</title>', '')
+        on.replace('<styl>e', '')
+        on.replace('</style>', '')
+        codeTextarea.value =`
+        <!Doctype>    
+                    <html>
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title id='titlew'>
+                                        
+                            </title>
+                            <style>
+                                ${codeTextarea2.value}
+                            </style>    
+                        </head>
+        ${on}  \n
+        <script>
+            ${codeTextarea3.value}
+        ${ni}
+        </html>
+        `;
+        
+    updatePreview()    
 }
 
             // Auto-complete HTML tags
