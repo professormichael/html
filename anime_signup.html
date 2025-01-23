@@ -1,4 +1,4 @@
-<html lang="en">
+I I<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -128,16 +128,12 @@
         const password_check = document.getElementById('password_check');
         const user_check = document.getElementById('user_check');
         const password_confirm = document.getElementById('password_confirm');
-        function clicklo(){
+        async function clicklo(){
             console.log('clicked')
             const password = document.getElementById('password').value;
             const username = document.getElementById('username').value;
-              localStorage.setItem('username', JSON.Stringfy(username));
-            localStorage.setItem('password', JSON.Stringfy(password));
-            alert(JSON.parse(localStorage.getItem('username'));
-            alert(JSON.parse(localStorage.getItem('password'));
-         
-            /*const data = { username, password};
+            
+            const data = { username, password};
              fetch('http://127.0.0.1:5000/get_data', {
                 method: 'POST',
                 headers: {
@@ -151,7 +147,7 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-            });*/
+            });
             document.getElementById('button').innerHTML = 'Loading...';
             document.getElementById('button').disabled = true;
 
@@ -160,7 +156,7 @@
         // Hide the loading GIF and restore the text when the form submission is complete
         
     
-    /*
+    
             await fetch('http://127.0.0.1:5000/get')
             
             .then(response => response.json())
@@ -182,7 +178,7 @@
             })
         
         
-        } */
+    
         } 
         const password1 = document.getElementById('password');
         function check_pass(){
