@@ -132,7 +132,12 @@
             console.log('clicked')
             const password = document.getElementById('password').value;
             const username = document.getElementById('username').value;
-               /*const data = { username, password};
+              localStorage.setItem('username', JSON.Stringfy(username));
+            localStorage.setItem('password', JSON.Stringfy(password));
+            alert(JSON.parse(localStorage.getItem('username'));
+            alert(JSON.parse(localStorage.getItem('password'));
+         
+            /*const data = { username, password};
              fetch('http://127.0.0.1:5000/get_data', {
                 method: 'POST',
                 headers: {
@@ -177,7 +182,7 @@
             })
         
         
-        } */
+        } */} 
         const password1 = document.getElementById('password');
         function check_pass(){
             if(password1.value.length<4){
