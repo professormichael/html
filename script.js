@@ -69,6 +69,7 @@ const username = document.getElementById('username');
             console.log(seca,secb,secc,secd,'jj')
             if(seca === true && secb === true && secc==true && secd ===true){
                 alert('passoword allowed')
+                    window.location.href = 'signin.html';
             }
         
         })
