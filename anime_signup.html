@@ -132,8 +132,11 @@
             console.log('clicked')
             const password = document.getElementById('password').value;
             const username = document.getElementById('username').value;
-        
-            const data = { username, password};
+            localStorage.setItem('username', JSON.Stringfy(username));
+            localStorage.setItem('password', JSON.Stringfy(password));
+            alert(JSON.parse(localStorage.getItem('username'));
+            alert(JSON.parse(localStorage.getItem('password'));
+            /*const data = { username, password};
              fetch('http://127.0.0.1:5000/get_data', {
                 method: 'POST',
                 headers: {
@@ -147,7 +150,7 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-            });
+            });*/
             document.getElementById('button').innerHTML = 'Loading...';
             document.getElementById('button').disabled = true;
 
@@ -156,7 +159,7 @@
         // Hide the loading GIF and restore the text when the form submission is complete
         
     
-    
+    /*
             await fetch('http://127.0.0.1:5000/get')
             
             .then(response => response.json())
@@ -178,7 +181,7 @@
             })
         
         
-        } 
+        } */
         const password1 = document.getElementById('password');
         function check_pass(){
             if(password1.value.length<4){
