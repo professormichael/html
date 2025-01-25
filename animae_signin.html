@@ -3,91 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In ---- Space X</title>
-    <style>
-        body{
-            
-        }
-        button{
-            cursor: pointer;
-        }
-        #form_signup{
-            
-            
-            width: 400px;
-            height: 400px;
-            
-            
-        }
-        label, input{
-            display: block;
-            width: 100%;
-        }
-
-        h2{
-            display: block;
-        }
-        #div_sign{
-            display: grid;
-            place-items: center;
-            
-            height: 400px;
-
-        }
-        
-        .label{
-            width: 100%;
-            font-size: 28px;
-            
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            font-weight: 500;
-        }
-        #password_check , #password_confirm, #user_check{
-            font-size: 12px;
-            color: red;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            text-align: center;
-        }
-        .input{
-            width: 100%;
-            font-size: 16px;
-            border-radius: 10px;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            font-weight: 450;
-            letter-spacing: 3px;
-            border: none;
-            border-bottom: 2px solid deepskyblue;
-            outline: none;
-            background: transparent;
-        }
-        .input:placeholder-shown{
-            font-size: 16px;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            
-        }
-        .flex{
-            width: 100%;
-            
-            justify-content: center;
-            align-items: center;
-            justify-items: center;
-            align-content: center;
-            display: flex;
-        }
-        button{
-            width: 100%;
-            height: 50px;
-            font-size: 20px;
-            font-family: ImpaRct, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-weight: 450;
-            border: none;
-            background: transparent;
-            border-radius: 10px;
-            
-            border-bottom: 2px solid deepskyblue;
-            outline: none;
-            border-radius: 10px;
-        }
-    </style>
+    <link href="anime.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div >
@@ -115,12 +31,6 @@
         </form>
     </div>
     <script>
-        //action=" http://127.0.0.1:5000/get_data" method="POST"
-       
-        //const password1 = document.getElementById('password').value;
-        //const username = document.getElementById('username').value;
-        
-        
         const user_check = document.getElementById('user_check');
         let trys = 5
         async function clickloa(){
@@ -129,26 +39,27 @@
             const username = document.getElementById('username').value;
             
             const data = { username, password};
-             fetch('http://127.0.0.1:5000/login', {
+            const formData = new FormData;
+            formData.append('username3', username);
+            formData.append('password3', password)
+            await fetch('https://hypnotic-beneficial-starfish.glitch.me/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
+                body: formData
+             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-                if(data ===true){
+                console.log(data.message);
+                if(data.success === true){
                     trys = 5
-                    user_check.innerText = 'Successful Login';
+                    user_check.innerText = data.message;
                     user_check.style.color = 'blue';
-                    window.location.href = 'animation2.html'
+                    window.location.href = 'http://professormichael.github.io/video_play/Superdev_hOME.html';
                     localStorage.setItem('logged', JSON.stringify('true'))
+                    localStorage.setItem('username', username)
                 }
                 else{
                     trys --;
-                    user_check.innerText = `Wrong Username Or Password and You Have ${trys} more trys`;
+                    user_check.innerText = ` ${data.message}, You Have ${trys} more trys`;
                     user_check.style.color = 'red';
                     if(trys <=0){
                         window.location.href = 'anime_signup.html'
@@ -159,17 +70,7 @@
             .catch(error => {
                 console.error('Error:', error);
             });
-            //document.getElementById('button').innerHTML = 'Loading...';
-            //document.getElementById('button').disabled = true;
-
-    // Simulate form submission for demonstration (replace this with your actual submission logic)
-    
-        // Hide the loading GIF and restore the text when the form submission is complete
-        
-    
-    
-            /*await fetch('http://127.0.0.1:5000/get_log')
-            
+         /*   await fetch('http://localhost:3000/get_log')
             .then(response => response.json())
             .then(data => {
                 console.log(data, data.point)
@@ -183,13 +84,9 @@
                 else if(data.point === false){
                     user_check.innerText =  'Username Already Exists';
                     user_check.style.color = 'red';
-                }
-                
-            })
-        
-        */
-        } 
-        
+                }  
+            })*/
+        }  
     </script>   
 </body>
 </html>
